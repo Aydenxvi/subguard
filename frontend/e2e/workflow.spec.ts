@@ -130,3 +130,23 @@ test("mobile layout and keyboard-accessible forms", async ({ page }) => {
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).not.toBeVisible();
 });
+
+test('edit a trial and delete it', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Explore the live demo' }).click();
+  await page.getByRole('heading', { name: 'Your money, on your terms.' }).waitFor();
+  await page.getByRole('navigation').first().getByRole('button', { name: 'Subscriptions', exact: true }).click();
+  await page.getByRole('button', { name: 'Edit Language Studio', exact: true }).click();
+  const dialog = page.getByRole('dialog');
+  await dialog.getByLabel('Name', { exact: true }).fill('Trial updated');
+  await dialog.getByLabel('Amount', { exact: true }).fill('299.99');
+  await dialog.getByRole('button', { name: 'Save changes' }).click();
+  await expect(dialog).not.toBeVisible();
+  await page.getByRole('button', { name: 'Edit Trial updated', exact: true }).click();
+  await expect(dialog.getByLabel('Amount', { exact: true })).toHaveValue('299.99');
+  await expect(dialog.getByLabel('Free trial', { exact: true })).toBeChecked();
+  await dialog.getByRole('button', { name: 'Close', exact: true }).click();
+  page.once('dialog', d => d.accept());
+  await page.getByRole('button', { name: 'Delete Trial updated', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Trial updated', exact: true })).toHaveCount(0);
+});

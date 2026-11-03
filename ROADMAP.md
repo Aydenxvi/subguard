@@ -1,14 +1,26 @@
 # Verified roadmap
-The original checklist was inaccurate. Audit: only config, models, schemas, billing
-helpers and auth helpers existed in commit 458564c. No API, migrations, bot, frontend,
-Docker deployment or tests existed. No Trial or RefundAttachment model existed.
 
-- [x] Phase 1: API, secure auth, migrations, PostgreSQL, billing and isolation tests
-- [x] Phase 2: durable reminders, Telegram bot, cancellations and refunds
-- [x] Phase 3: responsive React application, EN/RU/TR, demo, analytics
-- [ ] Phase 4: deployment, integration tests, documentation, release archive
+The archive’s original checklist contained inaccurate claims. Source audit found only
+configuration, models, schemas, billing helpers and auth helpers in commit `458564c`.
 
-Optional later enhancements: CSV mapping/import, evidence file uploads, automated FX
-feeds, provider integrations. None is represented as implemented.
+- [x] Phase 1: API, secure auth, migrations, PostgreSQL, billing and ownership tests.
+- [x] Phase 2: durable reminder worker, bot implementation, cancellations and refunds.
+- [x] Phase 3: responsive React application, EN/RU/TR, isolated demo and analytics.
+- [x] Phase 4: Docker deployment, automated checks, documentation and source packaging.
 
-Phase 2 verification: worker scheduling/retry tested with injected transport; live Telegram delivery requires credentials and remains unverified.
+“Implemented” does not mean external integrations have been live-tested. PROGRESS.md
+contains exact evidence. Live Telegram and Windows Desktop acceptance remain below.
+
+## Operational acceptance requiring deployment configuration
+
+- [ ] Configure a test bot and HTTPS Mini App URL; verify actual login and delivery.
+- [ ] Exercise Docker Desktop on Windows.
+- [ ] Verify backup restore and fresh deployment in the target production environment.
+
+## Optional extensions, not included in 0.1.0
+
+- [ ] CSV import with preview/mapping/deduplication (payment export is implemented).
+- [ ] Refund evidence uploads with private storage and access controls.
+- [ ] Explicit sourced FX conversion, provider catalog and verified cancellation links.
+- [ ] Monthly review notifications and usage-based suggestions (no usage data is invented).
+- [ ] Automatic demo retention and higher-throughput notification delivery.

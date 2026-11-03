@@ -100,3 +100,11 @@ There is no automatic FX conversion, banking connection, evidence-file upload or
 The inherited category/activity models remain extension points; categories are not seeded
 or shown as a finished UI feature. No dedicated Trial or RefundAttachment table is claimed.
 See NEXT_STEPS.md for operations checks and optional extensions.
+
+Deleting a subscription also removes its associated payment and cancellation records;
+refund cases remain with their subscription reference cleared. Archive instead of delete
+when you want to retain payment history.
+
+The release ZIP includes `history.bundle`, a portable Git history without local Git
+configuration or credentials. To inspect it, run `git clone history.bundle subguard-history`.
+The normal source tree is included alongside it; no Git tooling is needed to run Docker.
