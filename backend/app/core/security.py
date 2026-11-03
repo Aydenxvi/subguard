@@ -4,6 +4,7 @@
 `initDataUnsafe` from the client is never trusted.
 Reference: https://core.telegram.org/bots/webapps#validating-data-received-via-the-mini-app
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -38,16 +39,24 @@ def _secret_key(bot_token: str) -> bytes:
 
 
 def compute_init_data_hash(init_data: str, bot_token: str) -> str:
-    pairs = [(k, v) for k, v in parse_qsl(init_data, keep_blank_values=True) if k != "hash"]
+    pairs = [
+        (k, v) for k, v in parse_qsl(init_data, keep_blank_values=True) if k != "hash"
+    ]
     data_check_string = "\n".join(f"{k}={v}" for k, v in sorted(pairs))
-    return hmac.new(_secret_key(bot_token), data_check_string.encode(), hashlib.sha256).hexdigest()
+    return hmac.new(
+        _secret_key(bot_token), data_check_string.encode(), hashlib.sha256
+    ).hexdigest()
 
 
 def verify_init_data(
     init_data: str, bot_token: str | None = None, max_age_seconds: int | None = None
 ) -> dict[str, Any]:
     bot_token = bot_token if bot_token is not None else settings.telegram_bot_token
-    max_age = settings.init_data_max_age_seconds if max_age_seconds is None else max_age_seconds
+    max_age = (
+        settings.init_data_max_age_seconds
+        if max_age_seconds is None
+        else max_age_seconds
+    )
 
     if not bot_token:
         raise InitDataError("TELEGRAM_BOT_TOKEN is not configured")
@@ -85,7 +94,12 @@ def parse_telegram_user(fields: dict[str, Any]) -> TelegramUser:
         data = json.loads(raw)
     except json.JSONDecodeError as exc:
         raise InitDataError("initData user payload is not valid JSON") from exc
-    if not isinstance(data, dict) or not isinstance(data.get("id"), int) or isinstance(data.get("id"), bool) or data["id"] <= 0:
+    if (
+        not isinstance(data, dict)
+        or not isinstance(data.get("id"), int)
+        or isinstance(data.get("id"), bool)
+        or data["id"] <= 0
+    ):
         raise InitDataError("initData user payload has no id")
     return TelegramUser(
         telegram_id=int(data["id"]),
@@ -109,6 +123,8 @@ def create_access_token(user_id: int, *, is_demo: bool = False) -> str:
 
 def decode_access_token(token: str) -> dict[str, Any]:
     try:
-        return jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
+        return jwt.decode(
+            token, settings.jwt_secret, algorithms=[settings.jwt_algorithm]
+        )
     except JWTError as exc:
         raise InitDataError("invalid or expired session token") from exc

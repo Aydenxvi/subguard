@@ -5,6 +5,7 @@ Rules enforced here (see CLAUDE.md):
   * "Monthly" is calendar-month arithmetic, clamped to month end -- never "+30 days".
   * Amounts in different currencies are never summed without an explicit rate.
 """
+
 from __future__ import annotations
 
 import calendar
@@ -42,13 +43,20 @@ def add_months(anchor: date, months: int) -> date:
     return date(year, month, day)
 
 
-def interval_step(anchor: date, interval: BillingInterval, index: int, interval_days: int | None = None) -> date:
+def interval_step(
+    anchor: date,
+    interval: BillingInterval,
+    index: int,
+    interval_days: int | None = None,
+) -> date:
     """The `index`-th billing date counted from `anchor` (index 0 == anchor)."""
     if interval is BillingInterval.WEEKLY:
         return anchor + timedelta(weeks=index)
     if interval is BillingInterval.CUSTOM_DAYS:
         if not interval_days or interval_days < 1:
-            raise ValueError("interval_days is required and must be >= 1 for CUSTOM_DAYS")
+            raise ValueError(
+                "interval_days is required and must be >= 1 for CUSTOM_DAYS"
+            )
         return anchor + timedelta(days=interval_days * index)
     months = MONTHS_PER_INTERVAL.get(interval)
     if months is None:
@@ -70,7 +78,9 @@ def next_billing_date(
     result) is what keeps month-end subscriptions correct: a 31st anchor stays on the
     31st in long months instead of drifting to the 28th forever.
     """
-    if interval is BillingInterval.CUSTOM_DAYS and (not interval_days or interval_days < 1):
+    if interval is BillingInterval.CUSTOM_DAYS and (
+        not interval_days or interval_days < 1
+    ):
         raise ValueError("interval_days is required and must be >= 1 for CUSTOM_DAYS")
 
     def reached(candidate: date) -> bool:
@@ -101,7 +111,10 @@ def next_billing_date(
 
 
 def advance_billing_date(
-    anchor: date, interval: BillingInterval, current: date, interval_days: int | None = None
+    anchor: date,
+    interval: BillingInterval,
+    current: date,
+    interval_days: int | None = None,
 ) -> date:
     """The billing date strictly after `current`, still derived from the anchor."""
     return next_billing_date(
@@ -120,7 +133,9 @@ def monthly_equivalent_minor(
         numerator, denominator = amount_minor * 52, 12
     elif interval is BillingInterval.CUSTOM_DAYS:
         if not interval_days or interval_days < 1:
-            raise ValueError("interval_days is required and must be >= 1 for CUSTOM_DAYS")
+            raise ValueError(
+                "interval_days is required and must be >= 1 for CUSTOM_DAYS"
+            )
         numerator, denominator = amount_minor * 1461, interval_days * 48
     else:
         months = MONTHS_PER_INTERVAL.get(interval)

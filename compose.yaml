@@ -1,0 +1,70 @@
+name: subguard
+x-app: &app
+  image: subguard-backend:local
+  build:
+    context: .
+    dockerfile: backend/Dockerfile
+  environment: &app-env
+    DATABASE_URL: postgresql+asyncpg://subguard:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@db:5432/subguard
+    JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
+    TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+    DEMO_MODE_ENABLED: ${DEMO_MODE_ENABLED:-true}
+    ENVIRONMENT: ${ENVIRONMENT:-development}
+    DEBUG: 'false'
+    CORS_ORIGINS: ${CORS_ORIGINS:-["http://localhost:8080"]}
+  restart: unless-stopped
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: subguard
+      POSTGRES_DB: subguard
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U subguard -d subguard']
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+  migrate:
+    <<: *app
+    command: [alembic, upgrade, head]
+    restart: 'no'
+    depends_on:
+      db: {condition: service_healthy}
+  api:
+    <<: *app
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+  worker:
+    <<: *app
+    command: [python, -m, app.workers.reminders]
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  bot:
+    <<: *app
+    profiles: [telegram]
+    command: [python, /app/bot/app/main.py]
+    environment:
+      <<: *app-env
+      MINI_APP_URL: ${MINI_APP_URL:-}
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+  web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - '127.0.0.1:${WEB_PORT:-8080}:80'
+    depends_on:
+      api: {condition: service_healthy}
+    restart: unless-stopped
+volumes:
+  postgres_data:

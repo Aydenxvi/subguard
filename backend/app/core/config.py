@@ -5,14 +5,18 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=".env", env_file_encoding="utf-8", extra="ignore"
+    )
 
     app_name: str = "SubGuard API"
     environment: str = "development"
     debug: bool = True
 
     # postgresql+asyncpg://subguard:subguard_dev_pw@localhost:5432/subguard
-    database_url: str = "postgresql+asyncpg://subguard:subguard_dev_pw@localhost:5432/subguard"
+    database_url: str = (
+        "postgresql+asyncpg://subguard:subguard_dev_pw@localhost:5432/subguard"
+    )
 
     telegram_bot_token: str = ""
     jwt_secret: str = "change-me-in-production"

@@ -1,2 +1,2 @@
 # Next steps
-Finish frontend and browser tests; validate Docker deployment; document and package release.
+Finish final regression after reminder-retry and formatting changes; verify Compose restart persistence; package source and documentation as SUBGUARD_001.zip. Live Telegram remains a credential-dependent acceptance check.

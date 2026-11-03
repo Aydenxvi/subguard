@@ -32,7 +32,9 @@ class User(Base, TimestampMixin):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    telegram_id: Mapped[int] = mapped_column(BigInteger, unique=True, index=True, nullable=False)
+    telegram_id: Mapped[int] = mapped_column(
+        BigInteger, unique=True, index=True, nullable=False
+    )
     username: Mapped[Optional[str]] = mapped_column(String(64))
     first_name: Mapped[Optional[str]] = mapped_column(String(128))
     last_name: Mapped[Optional[str]] = mapped_column(String(128))
@@ -55,13 +57,23 @@ class UserSettings(Base, TimestampMixin):
         ForeignKey("users.id", ondelete="CASCADE"), unique=True, nullable=False
     )
     timezone: Mapped[str] = mapped_column(String(64), default="UTC", nullable=False)
-    primary_currency: Mapped[str] = mapped_column(String(3), default="TRY", nullable=False)
+    primary_currency: Mapped[str] = mapped_column(
+        String(3), default="TRY", nullable=False
+    )
     locale: Mapped[str] = mapped_column(String(8), default="en", nullable=False)
-    reminder_days_before: Mapped[int] = mapped_column(Integer, default=3, nullable=False)
-    trial_reminder_days_before: Mapped[int] = mapped_column(Integer, default=2, nullable=False)
-    quiet_hours_start: Mapped[int] = mapped_column(Integer, default=22, nullable=False)  # local hour
+    reminder_days_before: Mapped[int] = mapped_column(
+        Integer, default=3, nullable=False
+    )
+    trial_reminder_days_before: Mapped[int] = mapped_column(
+        Integer, default=2, nullable=False
+    )
+    quiet_hours_start: Mapped[int] = mapped_column(
+        Integer, default=22, nullable=False
+    )  # local hour
     quiet_hours_end: Mapped[int] = mapped_column(Integer, default=8, nullable=False)
-    notifications_enabled: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    notifications_enabled: Mapped[bool] = mapped_column(
+        Boolean, default=True, nullable=False
+    )
 
     user: Mapped["User"] = relationship(back_populates="settings")
 
@@ -104,8 +116,12 @@ class Subscription(Base, TimestampMixin):
     interval: Mapped[BillingInterval] = mapped_column(
         SAEnum(BillingInterval, name="billing_interval"), nullable=False
     )
-    interval_days: Mapped[Optional[int]] = mapped_column(Integer)  # only for CUSTOM_DAYS
-    anchor_date: Mapped[date] = mapped_column(Date, nullable=False)  # first/base billing date
+    interval_days: Mapped[Optional[int]] = mapped_column(
+        Integer
+    )  # only for CUSTOM_DAYS
+    anchor_date: Mapped[date] = mapped_column(
+        Date, nullable=False
+    )  # first/base billing date
     next_billing_date: Mapped[date] = mapped_column(Date, index=True, nullable=False)
 
     status: Mapped[SubscriptionStatus] = mapped_column(
@@ -119,7 +135,9 @@ class Subscription(Base, TimestampMixin):
     cancel_before_date: Mapped[Optional[date]] = mapped_column(Date)
     cancellation_url: Mapped[Optional[str]] = mapped_column(String(512))
 
-    payment_method_label: Mapped[Optional[str]] = mapped_column(String(64))  # e.g. "Visa ••4242"
+    payment_method_label: Mapped[Optional[str]] = mapped_column(
+        String(64)
+    )  # e.g. "Visa ••4242"
     archived_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
 
     user: Mapped["User"] = relationship(back_populates="subscriptions")
@@ -130,7 +148,9 @@ class PaymentRecord(Base, TimestampMixin):
     __tablename__ = "payment_records"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
     subscription_id: Mapped[int] = mapped_column(
         ForeignKey("subscriptions.id", ondelete="CASCADE"), index=True
     )
@@ -145,7 +165,9 @@ class CancellationRecord(Base, TimestampMixin):
     __tablename__ = "cancellation_records"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
     subscription_id: Mapped[int] = mapped_column(
         ForeignKey("subscriptions.id", ondelete="CASCADE"), index=True
     )
@@ -164,7 +186,9 @@ class RefundCase(Base, TimestampMixin):
     __tablename__ = "refund_cases"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
     subscription_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("subscriptions.id", ondelete="SET NULL")
     )
@@ -173,7 +197,9 @@ class RefundCase(Base, TimestampMixin):
     currency: Mapped[str] = mapped_column(String(3), nullable=False)
     charged_on: Mapped[Optional[date]] = mapped_column(Date)
     status: Mapped[RefundStatus] = mapped_column(
-        SAEnum(RefundStatus, name="refund_status"), default=RefundStatus.DRAFT, nullable=False
+        SAEnum(RefundStatus, name="refund_status"),
+        default=RefundStatus.DRAFT,
+        nullable=False,
     )
     reason: Mapped[Optional[str]] = mapped_column(Text)
     next_follow_up_on: Mapped[Optional[date]] = mapped_column(Date)
@@ -191,7 +217,9 @@ class RefundEvent(Base, TimestampMixin):
         ForeignKey("refund_cases.id", ondelete="CASCADE"), index=True
     )
     happened_on: Mapped[date] = mapped_column(Date, nullable=False)
-    kind: Mapped[str] = mapped_column(String(32), nullable=False)  # message_sent, reply, escalation
+    kind: Mapped[str] = mapped_column(
+        String(32), nullable=False
+    )  # message_sent, reply, escalation
     body: Mapped[Optional[str]] = mapped_column(Text)
 
     case: Mapped["RefundCase"] = relationship(back_populates="events")
@@ -203,19 +231,27 @@ class NotificationJob(Base, TimestampMixin):
     __tablename__ = "notification_jobs"
     __table_args__ = (
         UniqueConstraint(
-            "user_id", "kind", "subscription_id", "due_at", name="uq_notification_idempotency"
+            "user_id",
+            "kind",
+            "subscription_id",
+            "due_at",
+            name="uq_notification_idempotency",
         ),
     )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
     subscription_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("subscriptions.id", ondelete="CASCADE")
     )
     kind: Mapped[NotificationKind] = mapped_column(
         SAEnum(NotificationKind, name="notification_kind"), nullable=False
     )
-    due_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True, nullable=False)
+    due_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), index=True, nullable=False
+    )
     status: Mapped[JobStatus] = mapped_column(
         SAEnum(JobStatus, name="job_status"), default=JobStatus.PENDING, nullable=False
     )
@@ -224,7 +260,9 @@ class NotificationJob(Base, TimestampMixin):
     sent_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
     dedupe_key: Mapped[str] = mapped_column(String(200), unique=True, nullable=False)
     subject_date: Mapped[date] = mapped_column(Date, nullable=False)
-    refund_case_id: Mapped[Optional[int]] = mapped_column(ForeignKey("refund_cases.id", ondelete="CASCADE"))
+    refund_case_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("refund_cases.id", ondelete="CASCADE")
+    )
     payload_text: Mapped[Optional[str]] = mapped_column(Text)
 
 
@@ -232,6 +270,8 @@ class ActivityLog(Base, TimestampMixin):
     __tablename__ = "activity_logs"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), index=True
+    )
     action: Mapped[str] = mapped_column(String(64), nullable=False)
     detail: Mapped[Optional[str]] = mapped_column(Text)

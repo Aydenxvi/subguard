@@ -72,7 +72,9 @@ class SubscriptionBase(BaseModel):
     name: str = Field(..., min_length=1, max_length=128)
     provider: str | None = Field(default=None, max_length=128)
     notes: str | None = None
-    amount_minor: int = Field(..., ge=0, description="Integer minor units, e.g. 4999 = 49.99")
+    amount_minor: int = Field(
+        ..., ge=0, description="Integer minor units, e.g. 4999 = 49.99"
+    )
     currency: str = Field(..., min_length=3, max_length=3)
     interval: BillingInterval
     interval_days: int | None = Field(default=None, ge=1, le=3650)
@@ -89,7 +91,9 @@ class SubscriptionBase(BaseModel):
     def _currency_supported(cls, v: str) -> str:
         v = v.upper()
         if v not in settings.supported_currencies:
-            raise ValueError(f"unsupported currency {v}; allowed: {settings.supported_currencies}")
+            raise ValueError(
+                f"unsupported currency {v}; allowed: {settings.supported_currencies}"
+            )
         return v
 
     @field_validator("payment_method_label")
@@ -99,8 +103,10 @@ class SubscriptionBase(BaseModel):
             return v
         digits = [c for c in v if c.isdigit()]
         if len(digits) > 4:
-            raise ValueError("payment_method_label must not contain more than 4 digits "
-                             "(never store full card numbers)")
+            raise ValueError(
+                "payment_method_label must not contain more than 4 digits "
+                "(never store full card numbers)"
+            )
         return v
 
 

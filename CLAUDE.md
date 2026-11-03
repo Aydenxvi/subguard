@@ -35,7 +35,7 @@ authorized integration exists.
 - **Background jobs** — durable, database-backed reminder scheduling (a `NotificationJob`
   table), not an in-memory scheduler. Idempotent delivery, retries, timezone-aware.
 
-See ARCHITECTURE.md for schema and decision details.
+See docs/ARCHITECTURE.md for schema and decision details.
 
 ## Hard Rules (do not violate)
 
