@@ -222,6 +222,9 @@ class NotificationJob(Base, TimestampMixin):
     attempts: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     last_error: Mapped[Optional[str]] = mapped_column(Text)
     sent_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+    dedupe_key: Mapped[str] = mapped_column(String(200), unique=True, nullable=False)
+    subject_date: Mapped[date] = mapped_column(Date, nullable=False)
+    refund_case_id: Mapped[Optional[int]] = mapped_column(ForeignKey("refund_cases.id", ondelete="CASCADE"))
     payload_text: Mapped[Optional[str]] = mapped_column(Text)
 
 

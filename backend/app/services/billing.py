@@ -121,7 +121,7 @@ def monthly_equivalent_minor(
     elif interval is BillingInterval.CUSTOM_DAYS:
         if not interval_days or interval_days < 1:
             raise ValueError("interval_days is required and must be >= 1 for CUSTOM_DAYS")
-        numerator, denominator = round(amount_minor * DAYS_PER_MONTH * 1000), interval_days * 1000
+        numerator, denominator = amount_minor * 1461, interval_days * 48
     else:
         months = MONTHS_PER_INTERVAL.get(interval)
         if months is None:
@@ -133,8 +133,15 @@ def monthly_equivalent_minor(
 def annual_equivalent_minor(
     amount_minor: int, interval: BillingInterval, interval_days: int | None = None
 ) -> int:
-    monthly = monthly_equivalent_minor(amount_minor, interval, interval_days)
-    return monthly * 12
+    if interval is BillingInterval.WEEKLY:
+        return amount_minor * 52
+    if interval is BillingInterval.CUSTOM_DAYS:
+        if not interval_days or interval_days < 1:
+            raise ValueError("interval_days must be positive")
+        n, d = amount_minor * 1461, interval_days * 4
+    else:
+        n, d = amount_minor * 12, MONTHS_PER_INTERVAL[interval]
+    return (n * 2 + d) // (d * 2)
 
 
 @dataclass(frozen=True)

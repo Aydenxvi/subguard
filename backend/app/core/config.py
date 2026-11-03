@@ -18,9 +18,9 @@ class Settings(BaseSettings):
     jwt_secret: str = "change-me-in-production"
     jwt_algorithm: str = "HS256"
     jwt_ttl_seconds: int = 60 * 60 * 24 * 7
-    init_data_max_age_seconds: int = 60 * 60 * 24
+    init_data_max_age_seconds: int = 300
 
-    cors_origins: List[str] = ["*"]
+    cors_origins: List[str] = ["http://localhost:5173", "http://localhost:8080"]
 
     # Demo mode lets the Mini App run in a plain browser with an isolated demo user.
     demo_mode_enabled: bool = True
@@ -35,3 +35,6 @@ def get_settings() -> Settings:
 
 
 settings = get_settings()
+
+if len(settings.jwt_secret) < 32 or settings.jwt_secret == "change-me-in-production":
+    raise RuntimeError("Set JWT_SECRET to a random secret of at least 32 characters")

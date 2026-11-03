@@ -54,7 +54,10 @@ def verify_init_data(
     if not init_data:
         raise InitDataError("initData is empty")
 
-    fields = dict(parse_qsl(init_data, keep_blank_values=True))
+    pairs = parse_qsl(init_data, keep_blank_values=True)
+    if len({k for k, _ in pairs}) != len(pairs):
+        raise InitDataError("duplicate initData fields")
+    fields = dict(pairs)
     received_hash = fields.get("hash")
     if not received_hash:
         raise InitDataError("initData has no hash")
@@ -66,6 +69,8 @@ def verify_init_data(
     auth_date_raw = fields.get("auth_date")
     if not auth_date_raw or not auth_date_raw.isdigit():
         raise InitDataError("initData has no valid auth_date")
+    if int(auth_date_raw) > time.time() + 30:
+        raise InitDataError("initData is from the future")
     if max_age > 0 and time.time() - int(auth_date_raw) > max_age:
         raise InitDataError("initData is expired")
 
@@ -80,7 +85,7 @@ def parse_telegram_user(fields: dict[str, Any]) -> TelegramUser:
         data = json.loads(raw)
     except json.JSONDecodeError as exc:
         raise InitDataError("initData user payload is not valid JSON") from exc
-    if "id" not in data:
+    if not isinstance(data, dict) or not isinstance(data.get("id"), int) or isinstance(data.get("id"), bool) or data["id"] <= 0:
         raise InitDataError("initData user payload has no id")
     return TelegramUser(
         telegram_id=int(data["id"]),
