@@ -18,3 +18,5 @@ Use meaningful commits and rerun only checks affected by subsequent changes. Tes
 an isolated PostgreSQL database; never downgrade a database containing user data.
 
 User-selected CSV import and form improvements are complete in 0.2.0. Remaining optional extensions: refund evidence uploads, sourced FX conversion, provider catalog, monthly reviews and retention/scale work. Do not claim these completed.
+
+For a ready-to-import sample use downloads/subscriptions_example.csv; replace its fictional values before tracking real expenses.

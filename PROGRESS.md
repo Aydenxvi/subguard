@@ -77,3 +77,6 @@ and form usability after a blue redesign and soft animations.
 - Pytest inside the non-root image initially reported cache permission warnings; configured
   its disposable cache under /tmp. Test execution itself passed.
 - Live Telegram/Windows/production restore acceptance remains as documented above.
+
+### Example CSV
+Added downloads/subscriptions_example.csv: four explicitly fictional subscriptions, including annual billing and a trial. Verified with the actual importer: all four rows ready, automatic column mapping successful. No application code change.

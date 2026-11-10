@@ -25,3 +25,6 @@
 - Verified 26 backend tests, 3 frontend unit tests, 3 browser scenarios, production build,
   migration reversibility/schema consistency and database persistence after restart.
 - Documented unverified live Telegram/Windows acceptance and optional future features.
+
+### Sample data
+- Added a UTF-8 CSV example with four fictional subscription records, validated by the importer.
