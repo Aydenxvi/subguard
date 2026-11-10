@@ -1,4 +1,6 @@
-# Verified progress — SUBGUARD_001 / 0.1.0
+# Verified progress — SubGuard
+
+## Release 0.1.0 — SUBGUARD_001
 
 ## Audit
 
@@ -51,5 +53,27 @@ collecting Playwright tests, and non-root Docker image file permissions.
 
 Delivery is at least once; an acknowledgment/commit crash can duplicate a Telegram message.
 No automatic cancellation, refund submission, bank sync, guaranteed refunds or invented FX
-rates exist. Optional CSV import, evidence uploads, provider integrations and automatic demo
+rates exist. Evidence uploads, provider integrations and automatic demo
 retention are not implemented. Inherited category/activity tables remain extension points.
+
+
+## 0.2.0 — SUBGUARD_002 (2026-11-10)
+
+User confirmed that their initial functional checks worked; they prioritized CSV import
+and form usability after a blue redesign and soft animations.
+
+- Replaced charcoal/sage identity with a cobalt rail, light work surfaces and blue accents.
+- Added short page/card/modal/chart transitions and hover/press feedback, with complete
+  reduced-motion support. Visually inspected desktop 1440px and mobile 390px screenshots.
+- Trial checkbox/status stay synchronized. Moving trial end later adjusts an earlier
+  first paid date. Paid-date explanation and late-cancellation warning are localized.
+- Localized API failure messages; accepted decimal commas; added empty search feedback.
+- Implemented UTF-8 CSV import: bounds, delimiter/quoted-field parsing, column mapping,
+  preview, row selection, validation, account-isolated duplicate detection, atomic commit
+  and a transaction lock against concurrent repeat imports. No schema change.
+- Verification: **32 PostgreSQL backend tests**, **3 frontend unit tests**, **6 production
+  Docker Playwright scenarios** passed; TypeScript/Vite build succeeded. All pre-existing
+  functional browser scenarios still pass. Python lint passed before packaging.
+- Pytest inside the non-root image initially reported cache permission warnings; configured
+  its disposable cache under /tmp. Test execution itself passed.
+- Live Telegram/Windows/production restore acceptance remains as documented above.

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0 — SUBGUARD_002 — 2026-11-10
+
+- New light/cobalt visual identity and soft, reduced-motion-aware transitions.
+- Trial form date synchronization, status/checkbox consistency, local error messages,
+  decimal-comma amounts, cancellation warning and empty filtered results.
+- CSV subscription import with column mapping, preview, selection and server-side
+  duplicate prevention, including repeat/concurrent import protection.
+- Added CSV API and browser regression tests; 32 backend, 3 unit and 6 E2E checks passed.
+- No database schema change; existing Docker volume and .env must be preserved on update.
+
 ## 0.1.0 — SUBGUARD_001 — 2026-11-03
 
 - Preserved original backend foundation commit and corrected false roadmap claims.

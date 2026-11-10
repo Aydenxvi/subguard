@@ -1,3 +1,4 @@
+import CsvImport from "./CsvImport";
 import React, {
   useEffect,
   useRef,
@@ -107,8 +108,13 @@ function App() {
     [filter, setFilter] = useState(""),
     [currency, setCurrency] = useState(""),
     [sort, setSort] = useState("date");
+  const [csvOpen, setCsvOpen] = useState(false);
   const [trial, setTrial] = useState(false),
     [cycle, setCycle] = useState("monthly");
+  const [anchorDate, setAnchorDate] = useState(today());
+  const [trialEnd, setTrialEnd] = useState(today());
+  const [subStatus, setSubStatus] = useState("active");
+  const [cancelDate, setCancelDate] = useState("");
   const [events, setEvents] = useState<
     { id: number; happened_on: string; kind: string; body: string }[]
   >([]);
@@ -147,6 +153,8 @@ function App() {
         ...(auth ? { Authorization: "Bearer " + auth } : {}),
       },
       body: body === undefined ? undefined : JSON.stringify(body),
+    }).catch(() => {
+      throw new Error(t("networkError"));
     });
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
@@ -155,12 +163,19 @@ function App() {
         setToken("");
         setUser(null);
       }
+      const details = JSON.stringify(data.detail || "");
       throw new Error(
-        typeof data.detail === "string"
-          ? data.detail
-          : Array.isArray(data.detail)
-            ? data.detail.map((d: { msg: string }) => d.msg).join("; ")
-            : t("error"),
+        res.status === 401
+          ? t("sessionExpired")
+          : res.status === 429
+            ? t("rateLimit")
+            : res.status === 404
+              ? t("notFound")
+              : details.includes("First billing date")
+                ? t("trialDateError")
+                : res.status === 422
+                  ? t("validationError")
+                  : t("error"),
       );
     }
     return res.status === 204 ? (undefined as T) : await res.json();
@@ -228,6 +243,12 @@ function App() {
       setBusy(false);
     }
   }
+  const filteredSubs = subs.filter(
+    (s) =>
+      s.name.toLowerCase().includes(search.toLowerCase()) &&
+      (!filter || s.status === filter) &&
+      (!currency || s.currency === currency),
+  );
   const money = (n: number, c: string) =>
     new Intl.NumberFormat(locale, { style: "currency", currency: c }).format(
       n / 100,
@@ -243,10 +264,15 @@ function App() {
   const openSub = (s?: Sub) => {
     setTrial(s?.is_trial || false);
     setCycle(s?.interval || "monthly");
+    setAnchorDate(s?.anchor_date || today());
+    setTrialEnd(s?.trial_end_date || s?.anchor_date || today());
+    setSubStatus(s?.status || "active");
+    setCancelDate(s?.cancel_before_date || "");
     setModal({ type: "subscription", sub: s });
     setError("");
   };
   const openRefund = async (r?: Refund) => {
+    setError("");
     setEvents([]);
     setModal({ type: "refund", refund: r });
     if (r)
@@ -311,16 +337,25 @@ function App() {
       <p>{note}</p>
     </div>
   );
+  function parseAmount(value: string) {
+    try {
+      return minorUnits(value.trim().replace(",", "."));
+    } catch {
+      throw new Error(t("amountError"));
+    }
+  }
   async function formSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const d = Object.fromEntries(new FormData(e.currentTarget));
     if (!modal) return;
     try {
       if (modal.type === "subscription") {
+        if (trial && anchorDate < trialEnd)
+          throw new Error(t("trialDateError"));
         const data = {
           name: d.name,
           provider: d.provider || null,
-          amount_minor: minorUnits(String(d.amount)),
+          amount_minor: parseAmount(String(d.amount)),
           currency: d.currency,
           interval: d.interval,
           interval_days:
@@ -344,7 +379,7 @@ function App() {
       } else if (modal.type === "payment" && modal.sub) {
         await act(() =>
           api(`/subscriptions/${modal.sub!.id}/payments`, "POST", {
-            amount_minor: minorUnits(String(d.amount)),
+            amount_minor: parseAmount(String(d.amount)),
             charged_on: d.charged_on,
             was_expected: !d.unexpected,
             note: d.notes || null,
@@ -374,7 +409,7 @@ function App() {
               subscription_id: d.subscription_id
                 ? Number(d.subscription_id)
                 : null,
-              amount_minor: minorUnits(String(d.amount)),
+              amount_minor: parseAmount(String(d.amount)),
               currency: d.currency,
               charged_on: d.charged_on,
               reason: d.reason,
@@ -587,7 +622,7 @@ function App() {
                 {languagePicker}
               </div>
             </header>
-            <div className="page">
+            <div className="page" key={tab}>
               <div className="page-heading">
                 <div>
                   <div className="eyebrow">
@@ -613,10 +648,20 @@ function App() {
                   </p>
                 </div>
                 {["overview", "subscriptions"].includes(tab) && (
-                  <button className="primary" onClick={() => openSub()}>
-                    <Plus size={18} />
-                    {t("add")}
-                  </button>
+                  <div className="heading-actions">
+                    {tab === "subscriptions" && (
+                      <button
+                        className="secondary"
+                        onClick={() => setCsvOpen(true)}
+                      >
+                        {t("importCsv")}
+                      </button>
+                    )}
+                    <button className="primary" onClick={() => openSub()}>
+                      <Plus size={18} />
+                      {t("add")}
+                    </button>
+                  </div>
                 )}
                 {tab === "refunds" && (
                   <button className="primary" onClick={() => openRefund()}>
@@ -691,7 +736,9 @@ function App() {
                       <div className="round-icon">
                         <ShieldCheck size={28} />
                       </div>
-                      <span className="eyebrow">SubGuard · {t("protection")}</span>
+                      <span className="eyebrow">
+                        SubGuard · {t("protection")}
+                      </span>
                       <h2>{t("protectTitle")}</h2>
                       <p>{t("protectNote")}</p>
                       <button
@@ -762,13 +809,7 @@ function App() {
                     </select>
                   </div>
                   <section className="panel">
-                    {subs
-                      .filter(
-                        (s) =>
-                          s.name.toLowerCase().includes(search.toLowerCase()) &&
-                          (!filter || s.status === filter) &&
-                          (!currency || s.currency === currency),
-                      )
+                    {filteredSubs
                       .sort((a, b) =>
                         sort === "date"
                           ? a.next_billing_date.localeCompare(
@@ -778,7 +819,8 @@ function App() {
                             b.amount_minor - a.amount_minor,
                       )
                       .map((s) => subRow(s, true))}
-                    {!subs.length && empty()}
+                    {!filteredSubs.length &&
+                      empty(subs.length ? t("emptySearch") : t("emptyNote"))}
                   </section>
                 </>
               )}
@@ -1253,6 +1295,14 @@ function App() {
           </nav>
         </div>
       )}
+      {csvOpen && (
+        <CsvImport
+          locale={locale}
+          request={api}
+          onClose={() => setCsvOpen(false)}
+          onImported={() => refresh()}
+        />
+      )}
       <dialog
         ref={dialog}
         onCancel={() => setModal(null)}
@@ -1347,7 +1397,7 @@ function App() {
                           true,
                           {
                             inputMode: "decimal",
-                            pattern: "[0-9]+(\\.[0-9]{1,2})?",
+                            pattern: "[0-9]+([.,][0-9]{1,2})?",
                           },
                         )}
                         {select(
@@ -1383,40 +1433,93 @@ function App() {
                             true,
                             { min: 1, max: 3650 },
                           )}
-                        {field(
-                          "anchor",
-                          "anchor_date",
-                          modal.sub?.anchor_date || today(),
-                          "date",
-                          true,
-                        )}
-                        {select(
-                          "status",
-                          "status",
-                          statuses,
-                          modal.sub?.status || "active",
-                        )}
+                        <label>
+                          {t("anchor")}
+                          <input
+                            name="anchor_date"
+                            type="date"
+                            required
+                            value={anchorDate}
+                            min={trial ? trialEnd : undefined}
+                            aria-describedby={trial ? "trial-help" : undefined}
+                            onChange={(e) => setAnchorDate(e.target.value)}
+                          />
+                        </label>
+                        <label>
+                          {t("status")}
+                          <select
+                            aria-label={t("status")}
+                            name="status"
+                            value={subStatus}
+                            onChange={(e) => {
+                              const status = e.target.value;
+                              setSubStatus(status);
+                              if (status === "trial") {
+                                setTrial(true);
+                                if (anchorDate < trialEnd)
+                                  setAnchorDate(trialEnd);
+                              } else if (subStatus === "trial") setTrial(false);
+                            }}
+                          >
+                            {statuses.map((s) => (
+                              <option key={s} value={s}>
+                                {t(s)}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
                         <label className="checkbox">
                           <input
                             type="checkbox"
                             checked={trial}
-                            onChange={(e) => setTrial(e.target.checked)}
+                            onChange={(e) => {
+                              setTrial(e.target.checked);
+                              setSubStatus(
+                                e.target.checked ? "trial" : "active",
+                              );
+                              if (e.target.checked && anchorDate < trialEnd)
+                                setAnchorDate(trialEnd);
+                            }}
                           />
                           {t("trial")}
                         </label>
-                        {trial &&
-                          field(
-                            "trialEnd",
-                            "trial_end_date",
-                            modal.sub?.trial_end_date || today(),
-                            "date",
-                            true,
-                          )}
-                        {field(
-                          "cancelBefore",
-                          "cancel_before_date",
-                          modal.sub?.cancel_before_date || "",
-                          "date",
+                        {trial && (
+                          <>
+                            <label>
+                              {t("trialEnd")}
+                              <input
+                                name="trial_end_date"
+                                type="date"
+                                required
+                                value={trialEnd}
+                                onChange={(e) => {
+                                  const value = e.target.value;
+                                  setTrialEnd(value);
+                                  if (value > anchorDate) setAnchorDate(value);
+                                }}
+                              />
+                            </label>
+                            <p className="form-help full" id="trial-help">
+                              {t("trialHelp")}
+                            </p>
+                          </>
+                        )}
+                        <label>
+                          {t("cancelBefore")}
+                          <input
+                            name="cancel_before_date"
+                            type="date"
+                            value={cancelDate}
+                            onChange={(e) => setCancelDate(e.target.value)}
+                          />
+                        </label>
+                        {cancelDate > anchorDate && (
+                          <p
+                            className="form-help field-warning full"
+                            role="status"
+                          >
+                            {t("cancelWarning")}
+                          </p>
                         )}
                         {field(
                           "cancelUrl",

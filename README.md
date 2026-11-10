@@ -1,6 +1,6 @@
 # SubGuard
 
-[Download SUBGUARD_001.zip](https://github.com/Aydenxvi/subguard/raw/refs/heads/main/downloads/SUBGUARD_001.zip) — packaged source, documentation and portable Git history.
+[Download SUBGUARD_002.zip](https://github.com/Aydenxvi/subguard/raw/refs/heads/main/downloads/SUBGUARD_002.zip) — packaged source, documentation and portable Git history.
 
 **Your subscriptions. Your decision.** A Telegram Mini App and browser application for
 tracking recurring payments, free trials, cancellation requests and refund cases.
@@ -98,7 +98,7 @@ exposes only `/api`; use backend OpenAPI in development. See [architecture](docs
 Live Telegram sending needs an actual token, HTTPS deployment and a recipient who started
 the bot. This release’s automated delivery tests inject a transport; they do not establish
 live Telegram delivery. Provider cancellation/refund submissions remain manual.
-There is no automatic FX conversion, banking connection, evidence-file upload or CSV import.
+There is no automatic FX conversion, banking connection or evidence-file upload.
 The inherited category/activity models remain extension points; categories are not seeded
 or shown as a finished UI feature. No dedicated Trial or RefundAttachment table is claimed.
 See NEXT_STEPS.md for operations checks and optional extensions.
@@ -110,3 +110,36 @@ when you want to retain payment history.
 The release ZIP includes `history.bundle`, a portable Git history without local Git
 configuration or credentials. To inspect it, run `git clone history.bundle subguard-history`.
 The normal source tree is included alongside it; no Git tooling is needed to run Docker.
+
+
+## Version 0.2.0 — blue design and CSV import
+
+The interface now uses a cobalt navigation rail and light blue/white surfaces. Page,
+modal, card and chart transitions respect `prefers-reduced-motion`.
+
+In **Subscriptions → Import CSV**, choose a UTF-8 CSV file (up to 64 KB / 200 rows),
+map columns, preview the results and select valid rows to save. Download the template
+from that dialog. Comma, semicolon and tab delimiters and quoted fields are supported.
+Required fields: name, amount in major units (e.g. 12.50), currency, interval and
+anchor_date (YYYY-MM-DD). Optional: provider, notes, is_trial (true/false or 1/0),
+trial_end_date and interval_days. Custom-day billing requires interval_days.
+
+Rows with errors are not imported. Repeated rows and subscriptions already present in
+that account are skipped. A duplicate matches normalized name, amount, currency, billing
+cycle/custom days, first charge and trial dates/flag. Editing notes/provider alone does not
+create a new subscription. Imports are atomic and concurrent imports per user are serialized.
+A subscription import is separate from payment CSV export: payment exports are not a
+subscription import format. Preview does not write to the database.
+
+Trial forms now explain the first *paid* date. Moving the trial end beyond an earlier
+first payment adjusts that payment date visibly. A warning appears when the chosen
+cancellation deadline falls after the first payment. Decimal commas are accepted in forms.
+
+### Updating an existing Docker installation
+
+Keep your current `.env` and PostgreSQL volume. Extract the new source into your project
+folder (or pull the Git repository), then run `docker compose up --build -d`.
+Do not replace `.env` with the template or run `down -v`. No new schema migration is
+required for 0.2.0. Back up your database before updating an installation with real data.
+
+[Desktop design preview](docs/screenshots/desktop-002.png) · [Mobile design preview](docs/screenshots/mobile-002.png)

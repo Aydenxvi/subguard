@@ -50,7 +50,7 @@ from app.services.billing import (
     sum_by_currency,
 )
 
-app = FastAPI(title="SubGuard", version="0.1.0")
+app = FastAPI(title="SubGuard", version="0.2.0")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
@@ -585,3 +585,48 @@ async def retry_notification(
     job.due_at = datetime.now(timezone.utc)
     await db.commit()
     return row(job)
+
+
+# Import endpoints re-parse the file on commit; client preview data is never trusted.
+from app.services.csv_import import CsvRequest, inspect_csv  # noqa: E402
+
+
+@app.post("/api/import/subscriptions/preview")
+async def preview_subscriptions(
+    body: CsvRequest, user=Depends(current_user), db: AsyncSession = Depends(get_db)
+):
+    return inspect_csv(body, await all_subs(db, user))
+
+
+@app.post("/api/import/subscriptions")
+async def import_subscriptions(
+    body: CsvRequest, user=Depends(current_user), db: AsyncSession = Depends(get_db)
+):
+    await db.execute(text("SELECT pg_advisory_xact_lock(:key)"), {"key": -user.id})
+    preview = inspect_csv(body, await all_subs(db, user))
+    if preview["needs_mapping"]:
+        raise HTTPException(422, "csv_mapping")
+    requested = set(body.selected_rows)
+    rows = [r for r in preview["rows"] if r["row"] in requested]
+    if len(rows) != len(requested) or any(r["status"] == "invalid" for r in rows):
+        raise HTTPException(422, "csv_invalid_selection")
+    count = 0
+    for r in rows:
+        if r["status"] != "ready":
+            continue
+        data = SubscriptionInput.model_validate(r["data"])
+        db.add(
+            Subscription(
+                user_id=user.id,
+                **data.model_dump(),
+                next_billing_date=next_billing_date(
+                    data.anchor_date,
+                    data.interval,
+                    today=local_today(user),
+                    interval_days=data.interval_days,
+                ),
+            )
+        )
+        count += 1
+    await db.commit()
+    return {"imported": count, "skipped": len(rows) - count}

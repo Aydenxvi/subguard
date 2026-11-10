@@ -77,3 +77,7 @@ status to cancelled. Confirmation notes are user records, not proof obtained fro
 Refund requests are localized templates that quote entered facts and ask the provider to
 assess eligibility. Status changes append history events; no status implies SubGuard
 independently verified a refund. No attachment upload or automated support messages exist.
+
+## CSV import
+
+Preview and commit share SubscriptionInput validation. Commit re-parses the supplied file, checks selected row indices, rechecks database duplicates and saves one transaction. A negative per-user PostgreSQL advisory key serializes imports. No migration or new table is required. Preview does not persist the uploaded text. The 64 KB/200-row bound limits parsing and database work; nginx allows 256 KB request bodies to accommodate JSON encoding overhead.

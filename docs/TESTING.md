@@ -70,3 +70,5 @@ Not automated and not claimed verified without credentials:
 7. Close/reopen Telegram and verify the same user data remains.
 
 Never confuse a passing mocked delivery test with actual Telegram delivery.
+
+Version 0.2.0 adds CSV mapping/quoted delimiters/limits/duplicate isolation tests, a Russian trial form regression, decimal-comma entry and reduced-motion/mobile import checks. Observed results: 32 backend, 3 frontend unit and 6 browser tests passed against PostgreSQL/Docker.

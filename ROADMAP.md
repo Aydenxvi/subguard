@@ -17,9 +17,9 @@ contains exact evidence. Live Telegram and Windows Desktop acceptance remain bel
 - [ ] Exercise Docker Desktop on Windows.
 - [ ] Verify backup restore and fresh deployment in the target production environment.
 
-## Optional extensions, not included in 0.1.0
+## Optional extensions
 
-- [ ] CSV import with preview/mapping/deduplication (payment export is implemented).
+- [x] CSV import with preview, column mapping, selection and duplicate protection (0.2.0).
 - [ ] Refund evidence uploads with private storage and access controls.
 - [ ] Explicit sourced FX conversion, provider catalog and verified cancellation links.
 - [ ] Monthly review notifications and usage-based suggestions (no usage data is invented).
