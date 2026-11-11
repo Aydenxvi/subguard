@@ -60,8 +60,15 @@ function sub(data: Partial<Sub> & Pick<Sub, "id" | "name" | "amount_minor" | "cu
   };
 }
 function initial(): State {
+  const storedLocale = localStorage.getItem("subguard.locale");
+  const sampleLocale: Prefs["locale"] = storedLocale === "ru" || storedLocale === "tr" ? storedLocale : "en";
+  const refundCopy = {
+    en: { title: "Example duplicate charge", reason: "A sample charge appeared twice in the statement." },
+    ru: { title: "Пример повторного списания", reason: "Учебное списание дважды появилось в выписке." },
+    tr: { title: "Örnek çift ödeme", reason: "Örnek ödeme hesap özetinde iki kez göründü." },
+  }[sampleLocale];
   const settings: Prefs = {
-    locale: "en", timezone: "UTC", primary_currency: "USD", reminder_days_before: 3,
+    locale: sampleLocale, timezone: "UTC", primary_currency: "USD", reminder_days_before: 3,
     trial_reminder_days_before: 2, quiet_hours_start: 22, quiet_hours_end: 8,
     notifications_enabled: false,
   };
@@ -73,7 +80,7 @@ function initial(): State {
       sub({ id: 3, name: "Language Studio", provider: "Example Learning", amount_minor: 24900, currency: "TRY", interval: "monthly", anchor_date: after(7), status: "trial", is_trial: true, trial_end_date: after(7), cancel_before_date: after(6) }),
       sub({ id: 4, name: "Design Library", provider: "Example Design", amount_minor: 7900, currency: "EUR", interval: "annual", anchor_date: after(24) }),
     ],
-    refunds: [{ id: 1, title: "Example duplicate charge", amount_minor: 1499, currency: "USD", status: "draft", reason: "A sample charge appeared twice in the statement.", charged_on: after(-4), next_follow_up_on: after(6) }],
+    refunds: [{ id: 1, title: refundCopy.title, amount_minor: 1499, currency: "USD", status: "draft", reason: refundCopy.reason, charged_on: after(-4), next_follow_up_on: after(6) }],
     payments: [{ id: 1, subscription_id: 1, amount_minor: 1499, currency: "USD", charged_on: after(-25) }],
     cancellations: [], events: [],
   };

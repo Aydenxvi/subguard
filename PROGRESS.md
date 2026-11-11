@@ -137,3 +137,11 @@ Added downloads/subscriptions_example.csv: four explicitly fictional subscriptio
   passed locally. GitHub Pages workflow run 43073465936 completed successfully and
   reported `https://aydenxvi.github.io/subguard/` for this version. Direct HTTP access
   from the managed environment remains blocked by its network policy.
+
+## Portfolio images (2026-11-11)
+
+- Captured a 16:9 cover and additional real showcase screens for subscriptions, the
+  trial form, analytics and refunds. The fictional refund record is localized for
+  RU screenshots. The bot image remains visibly labelled as a simulation.
+- Added a recommended upload order and a downloadable PNG bundle. Browser/unit checks
+  and both frontend builds passed before packaging; screenshots were inspected locally.

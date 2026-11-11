@@ -25,6 +25,8 @@
 [мобильное приложение](screenshots/showcase-mobile-ru.png). Они созданы из
 публичной статической сборки с вымышленными данными; их можно повторить командой
 `npm run capture:showcase` при запущенном локальном preview.
+[Порядок загрузки на портфолио-площадки](screenshots/PORTFOLIO_ORDER_RU.md) и
+[ZIP со всеми PNG](https://github.com/Aydenxvi/subguard/raw/refs/heads/main/downloads/SUBGUARD_PORTFOLIO_SCREENSHOTS.zip).
 
 Это демонстрация интерфейса, а не онлайн-версия продукта. Нет PostgreSQL,
 входа через Telegram, отправки уведомлений, серверной проверки или хранения

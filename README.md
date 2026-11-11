@@ -16,7 +16,8 @@ No account, card or installation is needed.
 
 [Bot simulation screenshot](docs/screenshots/showcase-bot-simulation-ru.png) ·
 [Desktop interface screenshot](docs/screenshots/showcase-desktop-ru.png) ·
-[Mobile interface screenshot](docs/screenshots/showcase-mobile-ru.png)
+[Mobile interface screenshot](docs/screenshots/showcase-mobile-ru.png) ·
+[Download all portfolio PNGs](https://github.com/Aydenxvi/subguard/raw/refs/heads/main/downloads/SUBGUARD_PORTFOLIO_SCREENSHOTS.zip)
 
 React · TypeScript · FastAPI · PostgreSQL · SQLAlchemy · aiogram · Docker
 
