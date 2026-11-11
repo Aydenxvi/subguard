@@ -51,7 +51,7 @@ Chromium через `npx playwright install --with-deps chromium` и выпол�
 Файл `.github/workflows/showcase.yml` собирает и проверяет витрину, затем
 публикует `frontend/dist` через GitHub Pages при изменениях в `frontend` или
 самом workflow. В репозитории уже выбран источник **Settings → Pages → GitHub
-Actions**. [Последний запуск 43073465936](https://github.com/Aydenxvi/subguard/actions/runs/43073465936)
+Actions**. [Последний запуск 43075213744](https://github.com/Aydenxvi/subguard/actions/runs/43075213744)
 завершился успешно и показал указанный URL. Прямой запрос к `github.io` из среды
 разработки заблокирован её сетевыми настройками; перед отправкой ссылки клиентам
 откройте её в обычном браузере.

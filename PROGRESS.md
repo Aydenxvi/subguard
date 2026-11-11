@@ -145,3 +145,5 @@ Added downloads/subscriptions_example.csv: four explicitly fictional subscriptio
   RU screenshots. The bot image remains visibly labelled as a simulation.
 - Added a recommended upload order and a downloadable PNG bundle. Browser/unit checks
   and both frontend builds passed before packaging; screenshots were inspected locally.
+- Public ZIP download was verified byte-for-byte against the local archive. GitHub Pages
+  workflow run 43075213744 completed successfully after the updated showcase build.
