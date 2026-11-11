@@ -1,4 +1,5 @@
 name: Public showcase
+run-name: Publish static SubGuard preview
 on:
   push:
     branches: [main]
@@ -39,8 +40,6 @@ jobs:
           curl -fsS --retry 15 --retry-delay 1 --retry-connrefused http://127.0.0.1:4173/subguard/ > /dev/null
           npx playwright test -c playwright.showcase.config.ts
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: frontend/dist
