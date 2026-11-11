@@ -38,3 +38,6 @@ The owner enabled Pages. Follow-up workflow run 43071377681 succeeded and report
 https://aydenxvi.github.io/subguard/. Direct HTTP verification from the managed
 environment is blocked by network policy; ask the user to open the link normally if
 reachability confirmation is needed. Keep the full app's hosting status separate.
+The guided landing page, simulated bot flow at `#bot` and four portfolio screenshots
+were published in successful Pages workflow run 43073465936. Do not describe the
+simulation as a live Telegram bot.

@@ -134,4 +134,6 @@ Added downloads/subscriptions_example.csv: four explicitly fictional subscriptio
 - Captured four reproducible Russian-language portfolio screenshots using the static
   production build: landing, bot simulation, desktop app and mobile app.
 - Static build, normal frontend build, 3 unit tests and 5 Chromium showcase scenarios
-  passed locally. GitHub Pages deployment of these latest changes is pending.
+  passed locally. GitHub Pages workflow run 43073465936 completed successfully and
+  reported `https://aydenxvi.github.io/subguard/` for this version. Direct HTTP access
+  from the managed environment remains blocked by its network policy.

@@ -49,3 +49,4 @@
   enabled Pages in repository settings; direct HTTP verification is still pending.
 - Added a guided landing page, a labelled interactive bot simulation with a direct
   `#bot` link, and four reproducible portfolio screenshots.
+- Published the updated showcase in successful GitHub Pages run 43073465936.
