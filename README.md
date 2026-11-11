@@ -5,7 +5,8 @@
 [Case study](docs/PORTFOLIO.md) · [Architecture](docs/ARCHITECTURE.md) · [Tests / Actions](https://github.com/Aydenxvi/subguard/actions) · [Demo walkthrough (RU)](docs/DEMO_SCRIPT_RU.md)
 
 **[Try the interface](https://aydenxvi.github.io/subguard/)** ·
-**[Preview the Telegram bot flow](https://aydenxvi.github.io/subguard/#bot)**
+**[Preview the Telegram bot flow](https://aydenxvi.github.io/subguard/#bot)** ·
+**[View the screenshot gallery](https://aydenxvi.github.io/subguard/#gallery)**
 
 Open the first link and click **Explore the preview**. Browse fictional subscriptions,
 try the forms and switch languages. The second link opens an interactive, clearly labelled
@@ -18,6 +19,9 @@ No account, card or installation is needed.
 [Desktop interface screenshot](docs/screenshots/showcase-desktop-ru.png) ·
 [Mobile interface screenshot](docs/screenshots/showcase-mobile-ru.png) ·
 [Download all portfolio PNGs](https://github.com/Aydenxvi/subguard/raw/refs/heads/main/downloads/SUBGUARD_PORTFOLIO_SCREENSHOTS.zip)
+
+The [owner-supplied gallery](docs/screenshots/owner/) adds seven English desktop and
+seven Russian mobile screenshots. Open any image from the public gallery at full size.
 
 React · TypeScript · FastAPI · PostgreSQL · SQLAlchemy · aiogram · Docker
 

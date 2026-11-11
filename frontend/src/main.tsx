@@ -1,5 +1,6 @@
 import CsvImport from "./CsvImport";
 import BotPreview from "./BotPreview";
+import Gallery from "./Gallery";
 import React, {
   useEffect,
   useRef,
@@ -590,6 +591,7 @@ function App() {
               <div><strong>03</strong><h3>{t("showcaseStepThree")}</h3><p>{t("showcaseStepThreeText")}</p></div>
             </div>
           </section>}
+          {showcase && <Gallery t={t} />}
           <section className="founder">
             <span>01 / SUBGUARD</span>
             <h2>{t("storyTitle")}</h2>

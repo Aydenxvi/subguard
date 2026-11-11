@@ -2175,6 +2175,20 @@ dialog::backdrop {
 .showcase-guide-grid strong { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; background: #e8f0ff; color: #235fca; font-size: 12px; }
 .showcase-guide-grid h3 { color: #1e3e77; margin: 19px 0 8px; font-size: 17px; }
 .showcase-guide-grid p { color: #607391; font-size: 12px; line-height: 1.6; }
+.showcase-gallery { padding: 4px 0 58px; scroll-margin-top: 24px; }
+.showcase-gallery-heading { max-width: 650px; margin-bottom: 28px; }
+.showcase-gallery-heading h2 { color: #173d7f; font-size: clamp(25px, 3vw, 36px); letter-spacing: -.8px; margin: 9px 0; }
+.showcase-gallery-heading p { color: #647793; font-size: 14px; line-height: 1.6; }
+.showcase-gallery-group + .showcase-gallery-group { margin-top: 38px; }
+.showcase-gallery-group h3 { color: #1e3e77; font-size: 17px; margin: 0 0 16px; }
+.showcase-gallery-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.showcase-gallery-card { display: block; overflow: hidden; border: 1px solid #d7e4f9; border-radius: 16px; background: #fff; color: #1e3e77; box-shadow: 0 8px 30px #1e4ea10b; transition: transform .2s ease, box-shadow .2s ease; }
+.showcase-gallery-card:hover { transform: translateY(-3px); box-shadow: 0 14px 35px #1e4ea122; }
+.showcase-gallery-card:focus-visible { outline: 3px solid #2d63e8; outline-offset: 3px; }
+.showcase-gallery-card img { width: 100%; height: 190px; display: block; object-fit: cover; object-position: top left; background: #edf3ff; }
+.showcase-gallery-card > span { display: flex; justify-content: space-between; gap: 8px; padding: 13px 15px; font-size: 13px; font-weight: 600; }
+.showcase-gallery-card > span > span { color: #2d63e8; }
+@media (prefers-reduced-motion: reduce) { .showcase-gallery-card { transition: none; } }
 .showcase-topbar-button { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; color: #2858aa; font-weight: 600; }
 .showcase-topbar-button:hover { text-decoration: underline; }
 .bot-preview-dialog { width: min(840px, calc(100% - 24px)); background: #f6f9ff; border-color: #bdd2f7; box-shadow: 0 28px 90px #1839724a; overflow: auto; }
@@ -2203,6 +2217,8 @@ dialog::backdrop {
   .showcase-guide-heading { grid-template-columns: 1fr; }
   .showcase-guide-grid { grid-template-columns: 1fr; }
   .showcase-guide-grid > div { padding: 18px; }
+  .showcase-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .showcase-gallery-card img { height: 165px; }
   .bot-preview-layout { grid-template-columns: 1fr; padding: 12px; gap: 8px; }
   .bot-preview-intro { padding: 10px 12px; }
   .bot-preview-intro h2 { font-size: 22px; margin: 8px 0; }
@@ -2216,4 +2232,7 @@ dialog::backdrop {
   .hero-actions .secondary { white-space: normal; }
   .showcase-topbar-button span { display: none; }
   .showcase-guide { padding-bottom: 38px; }
+  .showcase-gallery { padding-bottom: 40px; }
+  .showcase-gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .showcase-gallery-card img { height: 148px; }
 }

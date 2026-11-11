@@ -28,6 +28,13 @@
 [Порядок загрузки на портфолио-площадки](screenshots/PORTFOLIO_ORDER_RU.md) и
 [ZIP со всеми PNG](https://github.com/Aydenxvi/subguard/raw/refs/heads/main/downloads/SUBGUARD_PORTFOLIO_SCREENSHOTS.zip).
 
+Владелец проекта также предоставил 14 дополнительных скриншотов: семь для ПК на
+английском и семь для телефона на русском. Они доступны в
+[галерее на витрине](https://aydenxvi.github.io/subguard/#gallery) и
+[папке оригинальных файлов](screenshots/owner/). В галерее каждый кадр
+открывается в полном размере. Эти изображения получены от владельца, а не
+сгенерированы командой `capture:showcase`.
+
 Это демонстрация интерфейса, а не онлайн-версия продукта. Нет PostgreSQL,
 входа через Telegram, отправки уведомлений, серверной проверки или хранения
 данных между устройствами. Не вводите в витрину настоящие финансовые данные.
@@ -51,7 +58,9 @@ Chromium через `npx playwright install --with-deps chromium` и выпол�
 Файл `.github/workflows/showcase.yml` собирает и проверяет витрину, затем
 публикует `frontend/dist` через GitHub Pages при изменениях в `frontend` или
 самом workflow. В репозитории уже выбран источник **Settings → Pages → GitHub
-Actions**. [Последний запуск 43075213744](https://github.com/Aydenxvi/subguard/actions/runs/43075213744)
-завершился успешно и показал указанный URL. Прямой запрос к `github.io` из среды
+Actions**. [Запуск 43075213744](https://github.com/Aydenxvi/subguard/actions/runs/43075213744)
+завершился успешно до добавления галереи; после публикации смотрите
+[текущие запуски](https://github.com/Aydenxvi/subguard/actions/workflows/showcase.yml).
+Прямой запрос к `github.io` из среды
 разработки заблокирован её сетевыми настройками; перед отправкой ссылки клиентам
 откройте её в обычном браузере.

@@ -71,3 +71,18 @@ test("bot preview has a shareable direct link", async ({ page }) => {
   await bot.getByRole("button", { name: "Close bot preview" }).click();
   await expect(page).toHaveURL(/\/subguard\/$/);
 });
+
+test("gallery shows all owner screenshots and opens their full-size files", async ({ page }) => {
+  await page.goto("./#gallery");
+  const gallery = page.locator("#gallery");
+  await expect(gallery.getByRole("link")).toHaveCount(14);
+  await expect(gallery.getByRole("heading", { name: "Desktop · English" })).toBeVisible();
+  await expect(gallery.getByRole("heading", { name: "Mobile · Russian" })).toBeVisible();
+  for (const image of await gallery.locator("img").all()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect.poll(() => image.evaluate((el) => (el as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+  }
+  const first = gallery.getByRole("link").first();
+  await expect(first).toHaveAttribute("href", /\/subguard\/gallery\/desktop-en-landing\.png$/);
+  await expect(first).toHaveAttribute("target", "_blank");
+});

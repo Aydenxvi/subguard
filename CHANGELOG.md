@@ -1,5 +1,11 @@
 # Changelog
 
+## Portfolio gallery — 2026-11-11
+
+- Published the owner's 14 screenshots as a desktop/mobile gallery with full-size links
+  and localized labels. The static demo and full application behavior are unchanged.
+- Locally verified both builds, 3 unit tests and 6 Chromium showcase scenarios.
+
 ## 0.2.0 — SUBGUARD_002 — 2026-11-10
 
 - New light/cobalt visual identity and soft, reduced-motion-aware transitions.

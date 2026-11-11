@@ -2,7 +2,7 @@
 
 **A subscription protection app delivered through Telegram and a browser demo.**
 
-[Source](https://github.com/Aydenxvi/subguard) · [Static interface showcase](https://aydenxvi.github.io/subguard/) · [Simulated bot flow](https://aydenxvi.github.io/subguard/#bot) · [Desktop](screenshots/showcase-desktop-ru.png) · [Mobile](screenshots/showcase-mobile-ru.png) · [Architecture](ARCHITECTURE.md)
+[Source](https://github.com/Aydenxvi/subguard) · [Static interface showcase](https://aydenxvi.github.io/subguard/) · [Screenshot gallery](https://aydenxvi.github.io/subguard/#gallery) · [Simulated bot flow](https://aydenxvi.github.io/subguard/#bot) · [Desktop](screenshots/showcase-desktop-ru.png) · [Mobile](screenshots/showcase-mobile-ru.png) · [Architecture](ARCHITECTURE.md)
 
 ## Problem
 

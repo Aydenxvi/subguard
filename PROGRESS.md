@@ -147,3 +147,14 @@ Added downloads/subscriptions_example.csv: four explicitly fictional subscriptio
   and both frontend builds passed before packaging; screenshots were inspected locally.
 - Public ZIP download was verified byte-for-byte against the local archive. GitHub Pages
   workflow run 43075213744 completed successfully after the updated showcase build.
+
+## Owner-supplied screenshot gallery (2026-11-11)
+
+- Inspected the owner's ZIP: 14 valid images, seven English desktop PNGs and seven
+  Russian mobile JPEGs. OCR and representative visual inspection found only fictional
+  portfolio data and no obvious secrets. Original image bytes were preserved.
+- Added a public landing-page gallery with localized captions and full-size links, plus
+  repository copies under `docs/screenshots/owner/`.
+- Local validation: three frontend unit tests, normal and showcase builds, and six
+  Chromium showcase scenarios passed. The new scenario loads all 14 images and checks
+  full-size links. Hosted publication status is recorded separately after deployment.
