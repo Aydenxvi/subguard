@@ -1,4 +1,5 @@
 import CsvImport from "./CsvImport";
+import BotPreview from "./BotPreview";
 import React, {
   useEffect,
   useRef,
@@ -30,6 +31,7 @@ import {
   Trash2,
   Pencil,
   CheckCircle2,
+  MessageCircle,
 } from "lucide-react";
 import { dictionaries, Locale, Key } from "./i18n";
 import {
@@ -85,7 +87,10 @@ type Notice = {
 const today = () => new Date().toLocaleDateString("en-CA");
 function App() {
   const [locale, setLocale] = useState<Locale>(
-    (localStorage.getItem("subguard.locale") as Locale) || "en",
+    (localStorage.getItem("subguard.locale") as Locale) ||
+      (showcase && ["ru", "tr"].includes(navigator.language.slice(0, 2))
+        ? (navigator.language.slice(0, 2) as Locale)
+        : "en"),
   );
   const t = (key: string) =>
     dictionaries[locale]?.[key as Key] || dictionaries.en[key as Key] || key;
@@ -111,6 +116,15 @@ function App() {
     [currency, setCurrency] = useState(""),
     [sort, setSort] = useState("date");
   const [csvOpen, setCsvOpen] = useState(false);
+  const [botOpen, setBotOpen] = useState(showcase && window.location.hash === "#bot");
+  const openBot = () => {
+    window.history.replaceState(null, "", "#bot");
+    setBotOpen(true);
+  };
+  const closeBot = () => {
+    window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    setBotOpen(false);
+  };
   const [trial, setTrial] = useState(false),
     [cycle, setCycle] = useState("monthly");
   const [anchorDate, setAnchorDate] = useState(today());
@@ -519,7 +533,10 @@ function App() {
               SubGuard
               <span className="brand-dot" />
             </a>
-            {languagePicker}
+            <div className="landing-header-actions">
+              {showcase && <button className="secondary" onClick={() => void signIn(true)}>{t("showcaseOpen")}<ArrowUpRight size={15} /></button>}
+              {languagePicker}
+            </div>
           </header>
           <section className="hero">
             <div className="eyebrow">
@@ -536,6 +553,7 @@ function App() {
                 {busy ? t("loading") : t(showcase ? "showcaseOpen" : "demo")}
                 <ArrowRight size={18} />
               </button>
+              {showcase && <button className="secondary" onClick={openBot}><MessageCircle size={17} />{t("showcaseBot")}</button>}
               {window.Telegram?.WebApp.initData && (
                 <button
                   className="secondary"
@@ -564,6 +582,14 @@ function App() {
               </span>
             </div>
           </section>
+          {showcase && <section className="showcase-guide" aria-label={t("showcaseGuide")}>
+            <div className="showcase-guide-heading"><span className="eyebrow">01 / 02 / 03</span><h2>{t("showcaseGuide")}</h2><p>{t("showcaseGuideIntro")}</p></div>
+            <div className="showcase-guide-grid">
+              <div><strong>01</strong><h3>{t("showcaseStepOne")}</h3><p>{t("showcaseStepOneText")}</p></div>
+              <div><strong>02</strong><h3>{t("showcaseStepTwo")}</h3><p>{t("showcaseStepTwoText")}</p></div>
+              <div><strong>03</strong><h3>{t("showcaseStepThree")}</h3><p>{t("showcaseStepThreeText")}</p></div>
+            </div>
+          </section>}
           <section className="founder">
             <span>01 / SUBGUARD</span>
             <h2>{t("storyTitle")}</h2>
@@ -623,6 +649,7 @@ function App() {
                 SubGuard <ChevronRight size={13} /> {t(tab)}
               </span>
               <div>
+                {showcase && <button className="showcase-topbar-button" onClick={openBot} aria-label={t("showcaseBot")}><MessageCircle size={16} /><span>{t("showcaseBot")}</span></button>}
                 {user.is_demo && (
                   <span className="demo-pill">
                     <span />
@@ -1305,6 +1332,11 @@ function App() {
           </nav>
         </div>
       )}
+      {showcase && botOpen && <BotPreview locale={locale} onClose={closeBot} onOpenApp={() => {
+        closeBot();
+        if (user) setTab("overview");
+        else void signIn(true);
+      }} />}
       {csvOpen && (
         <CsvImport
           locale={locale}

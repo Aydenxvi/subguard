@@ -7,7 +7,8 @@
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "capture:showcase": "node scripts/capture-showcase.mjs"
   },
   "dependencies": {
     "react": "18.3.1",

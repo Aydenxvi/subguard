@@ -47,3 +47,5 @@
 - Added a deployment workflow, Russian guide and desktop/mobile browser checks.
 - GitHub Pages publication succeeded in workflow run 43071377681 after the owner
   enabled Pages in repository settings; direct HTTP verification is still pending.
+- Added a guided landing page, a labelled interactive bot simulation with a direct
+  `#bot` link, and four reproducible portfolio screenshots.

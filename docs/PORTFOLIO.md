@@ -2,7 +2,7 @@
 
 **A subscription protection app delivered through Telegram and a browser demo.**
 
-[Source](https://github.com/Aydenxvi/subguard) · [Static interface showcase](https://aydenxvi.github.io/subguard/) · [Desktop](screenshots/desktop-002.png) · [Mobile](screenshots/mobile-002.png) · [Architecture](ARCHITECTURE.md)
+[Source](https://github.com/Aydenxvi/subguard) · [Static interface showcase](https://aydenxvi.github.io/subguard/) · [Simulated bot flow](https://aydenxvi.github.io/subguard/#bot) · [Desktop](screenshots/showcase-desktop-ru.png) · [Mobile](screenshots/showcase-mobile-ru.png) · [Architecture](ARCHITECTURE.md)
 
 ## Problem
 
@@ -36,6 +36,11 @@ and select rows. Record an actual test payment; compare recorded totals with est
 Prepare a refund message in English, Russian or Turkish. Reload to verify persistence.
 
 ![Desktop application](screenshots/desktop-002.png)
+
+The public landing page gives two entry paths: try the Mini App interface with fictional
+data, or explore a labelled Telegram-style command simulation. The latter runs entirely
+in the browser; it does not connect to Telegram or demonstrate live message delivery.
+[View the bot simulation screenshot](screenshots/showcase-bot-simulation-ru.png).
 
 ## Engineering decisions worth discussing
 

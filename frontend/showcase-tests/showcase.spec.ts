@@ -7,7 +7,7 @@ test("static preview supports navigation and local edits without API calls", asy
   });
   await page.goto("./");
   await expect(page.getByRole("note")).toContainText("Portfolio preview");
-  await page.getByRole("button", { name: "Explore the preview" }).click();
+  await page.locator(".hero-actions").getByRole("button", { name: "Explore the preview" }).click();
   await expect(page.getByText("Cinema Club").first()).toBeVisible();
   await page.locator(".sidebar nav").getByRole("button", { name: "Subscriptions" }).click();
   await page.getByRole("button", { name: "Add subscription" }).click();
@@ -26,7 +26,7 @@ test("static preview supports navigation and local edits without API calls", asy
 test("mobile preview shows the same pages and refund draft", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("./");
-  await page.getByRole("button", { name: "Explore the preview" }).click();
+  await page.locator(".hero-actions").getByRole("button", { name: "Explore the preview" }).click();
   await page.locator(".mobile-nav").getByRole("button", { name: "Refund assistant" }).click();
   await expect(page.getByText("Example duplicate charge")).toBeVisible();
   await page.getByRole("button", { name: /message/i }).click();
@@ -36,7 +36,7 @@ test("mobile preview shows the same pages and refund draft", async ({ page }) =>
 
 test("sample CSV can be previewed and imported within the browser tab", async ({ page }) => {
   await page.goto("./");
-  await page.getByRole("button", { name: "Explore the preview" }).click();
+  await page.locator(".hero-actions").getByRole("button", { name: "Explore the preview" }).click();
   await page.locator(".sidebar nav").getByRole("button", { name: "Subscriptions" }).click();
   await page.getByRole("button", { name: "Import CSV" }).click();
   const dialog = page.locator("dialog.csv-dialog[open]");
@@ -45,4 +45,29 @@ test("sample CSV can be previewed and imported within the browser tab", async ({
   await expect(dialog.getByRole("row")).toHaveCount(5);
   await dialog.getByRole("button", { name: "Import selected rows" }).click();
   await expect(dialog.getByRole("status")).toContainText("Import complete: 4");
+});
+
+test("landing explains the route and simulated bot opens the app preview", async ({ page }) => {
+  await page.goto("./");
+  await expect(page.getByRole("heading", { name: "How to explore SubGuard" })).toBeVisible();
+  await page.getByRole("button", { name: "Try the bot flow" }).last().click();
+  const bot = page.getByRole("dialog", { name: "Telegram bot preview" });
+  await expect(bot.getByRole("note")).toContainText("no message is sent to Telegram");
+  await bot.getByRole("button", { name: "/stop" }).click();
+  await expect(bot.getByText("Reminders paused.")).toBeVisible();
+  await bot.getByRole("button", { name: "/reminders" }).click();
+  await expect(bot.getByText(/Reminders enabled/)).toBeVisible();
+  await bot.getByRole("button", { name: "Open Mini App preview" }).first().click();
+  await expect(page.getByText("Cinema Club").first()).toBeVisible();
+});
+
+test("bot preview has a shareable direct link", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("./#bot");
+  const bot = page.getByRole("dialog", { name: "Telegram bot preview" });
+  await expect(bot).toBeVisible();
+  await expect(bot.getByRole("button", { name: "/app" })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await bot.getByRole("button", { name: "Close bot preview" }).click();
+  await expect(page).toHaveURL(/\/subguard\/$/);
 });

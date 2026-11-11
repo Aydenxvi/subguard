@@ -125,3 +125,13 @@ Added downloads/subscriptions_example.csv: four explicitly fictional subscriptio
   URL `https://aydenxvi.github.io/subguard/`. Direct HTTP reachability from this
   restricted development environment was not checked (`github.io` is blocked by its
   network policy). The user should open the published URL in a normal browser.
+
+## Showcase visitor journey (2026-11-11)
+
+- Added clear entry buttons, a three-step guide and a shareable `#bot` link on the public
+  landing page. The Telegram-style conversation is explicitly labelled as a simulation;
+  it reproduces the configured bot command copy without sending messages.
+- Captured four reproducible Russian-language portfolio screenshots using the static
+  production build: landing, bot simulation, desktop app and mobile app.
+- Static build, normal frontend build, 3 unit tests and 5 Chromium showcase scenarios
+  passed locally. GitHub Pages deployment of these latest changes is pending.

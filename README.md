@@ -4,11 +4,22 @@
 
 [Case study](docs/PORTFOLIO.md) · [Architecture](docs/ARCHITECTURE.md) · [Tests / Actions](https://github.com/Aydenxvi/subguard/actions) · [Demo walkthrough (RU)](docs/DEMO_SCRIPT_RU.md)
 
-![SubGuard desktop overview](docs/screenshots/desktop-002.png)
+**[Try the interface](https://aydenxvi.github.io/subguard/)** ·
+**[Preview the Telegram bot flow](https://aydenxvi.github.io/subguard/#bot)**
+
+Open the first link and click **Explore the preview**. Browse fictional subscriptions,
+try the forms and switch languages. The second link opens an interactive, clearly labelled
+bot simulation; its **Open Mini App preview** button leads to the same interface.
+No account, card or installation is needed.
+
+![Public showcase with clear entry buttons](docs/screenshots/showcase-landing-ru.png)
+
+[Bot simulation screenshot](docs/screenshots/showcase-bot-simulation-ru.png) ·
+[Desktop interface screenshot](docs/screenshots/showcase-desktop-ru.png) ·
+[Mobile interface screenshot](docs/screenshots/showcase-mobile-ru.png)
 
 React · TypeScript · FastAPI · PostgreSQL · SQLAlchemy · aiogram · Docker
 
-**[Open the public interface showcase](https://aydenxvi.github.io/subguard/)** ·
 [How this static preview works](docs/SHOWCASE_RU.md)
 
 The showcase uses fictional data stored only in the current browser tab. The full
