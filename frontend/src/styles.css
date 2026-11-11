@@ -1,6 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.showcase-banner {
+  position: relative;
+  z-index: 10;
+  padding: 9px 16px;
+  background: #dbeafe;
+  color: #123a83;
+  border-bottom: 1px solid #abc8fb;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
 :root {
   font-family:
     Inter,

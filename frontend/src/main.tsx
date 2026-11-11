@@ -45,6 +45,8 @@ import {
   statuses,
 } from "./lib";
 import "./styles.css";
+import { showcaseRequest } from "./showcase";
+const showcase = import.meta.env.VITE_SHOWCASE === "true";
 declare global {
   interface Window {
     Telegram?: {
@@ -146,6 +148,7 @@ function App() {
     body?: unknown,
     auth = token,
   ): Promise<T> {
+    if (showcase) return showcaseRequest<T>(path, method, body);
     const res = await fetch("/api" + path, {
       method,
       headers: {
@@ -219,13 +222,15 @@ function App() {
     }
   }
   useEffect(() => {
-    window.Telegram?.WebApp.ready();
-    window.Telegram?.WebApp.expand();
+    if (!showcase) {
+      window.Telegram?.WebApp.ready();
+      window.Telegram?.WebApp.expand();
+    }
     if (token) {
       refresh()
         .catch((e) => setError(e.message))
         .finally(() => setLoading(false));
-    } else if (window.Telegram?.WebApp.initData) {
+    } else if (!showcase && window.Telegram?.WebApp.initData) {
       void signIn();
     }
   }, []);
@@ -501,6 +506,11 @@ function App() {
     );
   return (
     <>
+      {showcase && (
+        <div className="showcase-banner" role="note">
+          {t("showcaseNotice")}
+        </div>
+      )}
       {!user ? (
         <main className="landing">
           <header>
@@ -523,7 +533,7 @@ function App() {
                 disabled={busy}
                 onClick={() => signIn(true)}
               >
-                {busy ? t("loading") : t("demo")}
+                {busy ? t("loading") : t(showcase ? "showcaseOpen" : "demo")}
                 <ArrowRight size={18} />
               </button>
               {window.Telegram?.WebApp.initData && (
@@ -541,7 +551,7 @@ function App() {
                 {error}
               </p>
             )}
-            <small>{t("demoNote")}</small>
+            <small>{showcase ? t("showcaseIntro") : t("demoNote")}</small>
             <div className="hero-art" aria-hidden="true">
               <div className="orbit orbit-one" />
               <div className="orbit orbit-two" />

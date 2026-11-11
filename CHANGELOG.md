@@ -40,3 +40,8 @@
 - Added a production Compose override and Caddy HTTPS configuration for a server with
   a public hostname, plus Russian deployment instructions.
 - Validated Compose and Caddyfile syntax. A hosted instance has not been provisioned.
+
+## Static portfolio showcase — 2026-11-11
+- Added an opt-in GitHub Pages build of the existing React UI with fictional, tab-local data.
+- Clearly labeled the preview and disabled Telegram/API traffic in this build.
+- Added a deployment workflow, Russian guide and desktop/mobile browser checks.

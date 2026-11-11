@@ -106,3 +106,16 @@ Added downloads/subscriptions_example.csv: four explicitly fictional subscriptio
 - No external server, stable hostname or hosting account is available. The user requires
   an external, free, always-on host without a bank card. No provider's current free-tier
   terms were verified, and no public deployment has been performed.
+
+## Static portfolio showcase (2026-11-11)
+
+- The user chose a free, public interface preview after Oracle declined their card.
+- Added an explicit static mode with fictional records and tab-scoped browser state;
+  no production API, Telegram login or notification request is made by that mode.
+- Local production builds of full and static variants passed; three frontend unit tests
+  passed. Three Chromium scenarios
+  passed against the static production build: desktop navigation/local editing/reload
+  without API calls, mobile refund view/draft/no horizontal overflow, and CSV
+  preview/import using the sample file.
+- A GitHub Pages workflow and guide are prepared. Public deployment requires a verified
+  successful Actions run and reachable Pages URL; those are not claimed yet.

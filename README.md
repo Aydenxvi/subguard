@@ -10,6 +10,9 @@ React · TypeScript · FastAPI · PostgreSQL · SQLAlchemy · aiogram · Docker
 
 Browser demo: runs locally without Telegram credentials. A hosted public demo is not yet published.
 
+For a card-free interface preview, build the [static GitHub Pages showcase](docs/SHOWCASE_RU.md).
+It uses fictional in-browser data; the full FastAPI/PostgreSQL/Telegram app still needs a server.
+
 [Download SUBGUARD_002.zip](https://github.com/Aydenxvi/subguard/raw/refs/heads/main/downloads/SUBGUARD_002.zip) — packaged source, documentation and portable Git history.
 
 **Your subscriptions. Your decision.** A Telegram Mini App and browser application for

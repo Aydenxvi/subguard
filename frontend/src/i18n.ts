@@ -1,5 +1,8 @@
 export type Locale = "en" | "ru" | "tr";
 const en = {
+  showcaseNotice: "Portfolio preview · Fictional data · Changes stay in this browser tab · Telegram reminders are off",
+  showcaseIntro: "Explore the interface with sample data. This static preview has no server, Telegram login or notifications.",
+  showcaseOpen: "Explore the preview",
   trialHelp:
     "Enter the first paid charge, not the date you started the free trial. Moving the trial end later also moves an earlier first charge.",
   trialDateError: "The first paid charge must be on or after the trial end.",
@@ -194,6 +197,9 @@ const en = {
 };
 type Dict = typeof en;
 const ru: Dict = {
+  showcaseNotice: "Портфолио · Вымышленные данные · Изменения только в этой вкладке · Telegram-уведомления выключены",
+  showcaseIntro: "Посмотрите интерфейс с примерами. У этой статической версии нет сервера, входа через Telegram и уведомлений.",
+  showcaseOpen: "Открыть витрину",
   trialHelp:
     "Укажите дату первого платного списания, а не начало бесплатного периода. При переносе конца пробного периода вперёд более ранняя дата платежа сдвинется вместе с ним.",
   trialDateError:
@@ -389,6 +395,9 @@ const ru: Dict = {
   success: "Готово",
 };
 const tr: Dict = {
+  showcaseNotice: "Portföy önizlemesi · Örnek veriler · Değişiklikler yalnızca bu sekmede · Telegram bildirimleri kapalı",
+  showcaseIntro: "Örnek verilerle arayüzü inceleyin. Bu statik sürümde sunucu, Telegram girişi veya bildirimler yoktur.",
+  showcaseOpen: "Önizlemeyi aç",
   trialHelp:
     "Ücretsiz denemenin başlangıcını değil, ilk ücretli ödeme tarihini girin. Deneme bitişini ileri taşımak, daha erken olan ilk ödemeyi de taşır.",
   trialDateError: "İlk ücretli ödeme, deneme bitişinden önce olamaz.",

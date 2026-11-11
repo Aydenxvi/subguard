@@ -30,3 +30,8 @@ case study, API snapshot and walkthrough are prepared. App release remains 0.2.0
 an application change; the next downloadable package is SUBGUARD_003.
 
 The user now wants a free always-on server without a bank card. No hosting account, VPS, stable DNS or SSH access has been supplied. Production Compose/Caddy and docs/HOSTING_RU.md are prepared. Do not claim a live deployment. Free-tier availability/terms were not verifiable from this environment (oracle.com blocked by network policy).
+
+The user now requests a public, static interface showcase because Oracle declined their
+Kyrgyzstan-issued card. The showcase code and Pages workflow are prepared. Verify the
+hosted workflow and URL before claiming the showcase is live. A static showcase does not
+run the real bot/API/worker and is not the permanent hosting requested earlier.
