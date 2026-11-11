@@ -35,3 +35,6 @@ The user now requests a public, static interface showcase because Oracle decline
 Kyrgyzstan-issued card. The showcase code and Pages workflow are prepared. Verify the
 hosted workflow and URL before claiming the showcase is live. A static showcase does not
 run the real bot/API/worker and is not the permanent hosting requested earlier.
+First hosted run 43070624404 failed when configure-pages tried to enable Pages using
+the workflow token (`Resource not accessible by integration`). Ask the repository owner
+to select GitHub Actions in Settings → Pages, then rerun the workflow and verify the URL.

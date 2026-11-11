@@ -119,3 +119,7 @@ Added downloads/subscriptions_example.csv: four explicitly fictional subscriptio
   preview/import using the sample file.
 - A GitHub Pages workflow and guide are prepared. Public deployment requires a verified
   successful Actions run and reachable Pages URL; those are not claimed yet.
+- Hosted workflow run 43070624404 reached the Pages configuration step and failed with
+  `HttpError: Resource not accessible by integration` while attempting to create the
+  Pages site. The repository owner must enable **Settings → Pages → GitHub Actions**
+  once, then rerun **Public showcase**. No live URL is claimed.
