@@ -2187,7 +2187,7 @@ dialog::backdrop {
 .showcase-gallery-card:focus-visible { outline: 3px solid #2d63e8; outline-offset: 3px; }
 .showcase-gallery-card img { width: 100%; height: 190px; display: block; object-fit: cover; object-position: top left; background: #edf3ff; }
 .showcase-gallery-card > span { display: flex; justify-content: space-between; gap: 8px; padding: 13px 15px; font-size: 13px; font-weight: 600; }
-.showcase-gallery-card > span > span { color: #2d63e8; }
+.showcase-gallery-card > span > svg { flex: none; color: #2d63e8; }
 @media (prefers-reduced-motion: reduce) { .showcase-gallery-card { transition: none; } }
 .showcase-topbar-button { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; color: #2858aa; font-weight: 600; }
 .showcase-topbar-button:hover { text-decoration: underline; }

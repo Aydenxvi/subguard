@@ -1,3 +1,5 @@
+import { ArrowUpRight } from "lucide-react";
+
 const screens = [
   ["landing", "galleryLanding"],
   ["overview", "overview"],
@@ -25,7 +27,7 @@ export default function Gallery({ t }: { t: (key: string) => string }) {
               return (
                 <a href={path} target="_blank" rel="noopener noreferrer" className="showcase-gallery-card" key={path} aria-label={`${t(label)} — ${t("galleryOpen")}`}>
                   <img src={path} alt={`${t(label)} — SubGuard`} loading="lazy" />
-                  <span>{t(label)} <span aria-hidden="true">↗</span></span>
+                  <span>{t(label)} <ArrowUpRight size={16} aria-hidden="true" /></span>
                 </a>
               );
             })}
