@@ -80,3 +80,19 @@ and form usability after a blue redesign and soft animations.
 
 ### Example CSV
 Added downloads/subscriptions_example.csv: four explicitly fictional subscriptions, including annual billing and a trial. Verified with the actual importer: all four rows ready, automatic column mapping successful. No application code change.
+
+
+## Portfolio preparation and Telegram onboarding (2026-11-11)
+
+- Added README screenshot/engineering evidence, a full-stack case study, API walkthrough
+  with generated OpenAPI snapshot (22 paths), and a Russian 2–3 minute demo script.
+- Added GitHub Actions jobs for backend/migrations, frontend build/unit tests and Docker
+  browser scenarios. Workflow YAML parsed locally; hosted Actions results are not yet verified.
+- Added safe local configuration generation and bounded HTTP readiness checks. Verified
+  generation, restrictive permissions and preservation of an existing .env.
+- Verified pg_dump/pg_restore of the application schema and a synthetic user in unique
+  temporary databases; original application data was not dumped or changed. This is
+  recovery-tooling evidence, not validation of a production backup or disaster-recovery plan.
+- Frontend unit/build commands rerun locally. No application behavior changed in this work.
+- User has no server/domain yet. Added a Windows/Cloudflare Quick Tunnel + BotFather guide;
+  tunnel installation, real Telegram delivery and public hosting remain unverified.

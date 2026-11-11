@@ -28,3 +28,10 @@
 
 ### Sample data
 - Added a UTF-8 CSV example with four fictional subscription records, validated by the importer.
+
+
+## Portfolio and onboarding documentation — 2026-11-11
+- Added full-stack case study, API snapshot, screenshots in README and demo walkthrough.
+- Added CI configuration and local setup/readiness/recovery tooling.
+- Verified isolated PostgreSQL schema + synthetic-row backup/restore.
+- Documented first Telegram launch without a VPS/domain using a temporary local tunnel.

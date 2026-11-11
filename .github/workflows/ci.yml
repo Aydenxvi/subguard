@@ -1,0 +1,99 @@
+name: Checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: subguard
+          POSTGRES_PASSWORD: disposable_ci_password
+          POSTGRES_DB: subguard_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U subguard -d subguard_test"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgresql+asyncpg://subguard:disposable_ci_password@127.0.0.1:5432/subguard_test
+      JWT_SECRET: disposable-ci-only-secret-at-least-32-characters
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            backend/requirements.txt
+            backend/requirements-dev.txt
+      - run: python -m pip install -r backend/requirements-dev.txt
+      - run: ruff check backend bot scripts
+      - name: Verify migrations on the disposable database
+        working-directory: backend
+        run: |
+          alembic upgrade head
+          alembic downgrade base
+          alembic upgrade head
+          alembic check
+      - name: Backend tests on PostgreSQL
+        working-directory: backend
+        run: python -m pytest -q
+  frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+        working-directory: frontend
+      - run: npm test && npm run build
+        working-directory: frontend
+  docker-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Generate disposable local configuration
+        run: python3 scripts/configure_local.py
+      - run: docker compose up --build -d
+      - name: Wait for the application
+        run: python3 scripts/check_health.py
+      - name: Verify PostgreSQL backup and restore in temporary databases
+        run: python3 scripts/check_backup.py
+      - run: npm ci
+        working-directory: frontend
+      - run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - run: npm run test:e2e
+        working-directory: frontend
+        env:
+          E2E_URL: http://127.0.0.1:8080
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-failure-screenshots
+          path: frontend/test-results/
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Stop disposable services
+        if: always()
+        run: docker compose down -v

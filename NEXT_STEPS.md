@@ -20,3 +20,11 @@ an isolated PostgreSQL database; never downgrade a database containing user data
 User-selected CSV import and form improvements are complete in 0.2.0. Remaining optional extensions: refund evidence uploads, sourced FX conversion, provider catalog, monthly reviews and retention/scale work. Do not claim these completed.
 
 For a ready-to-import sample use downloads/subscriptions_example.csv; replace its fictional values before tracking real expenses.
+
+
+Current priority: user wants a full-stack portfolio and a first Telegram launch. They have
+no VPS/domain. Follow docs/TELEGRAM_RU.md for a temporary test on their own Windows machine;
+never request bot tokens in chat. For permanent hosting, obtain the user's target and
+configure secrets securely. GitHub Actions hosted outcome remains unverified. Portfolio
+case study, API snapshot and walkthrough are prepared. App release remains 0.2.0 until
+an application change; the next downloadable package is SUBGUARD_003.
