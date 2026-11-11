@@ -96,3 +96,13 @@ Added downloads/subscriptions_example.csv: four explicitly fictional subscriptio
 - Frontend unit/build commands rerun locally. No application behavior changed in this work.
 - User has no server/domain yet. Added a Windows/Cloudflare Quick Tunnel + BotFather guide;
   tunnel installation, real Telegram delivery and public hosting remain unverified.
+
+## External hosting preparation (2026-11-11)
+
+- User reports that the local Cloudflare tunnel and Telegram bot work. This was not
+  independently checked from the development environment.
+- Added a production Compose override with Caddy TLS proxy, plus a Russian deployment
+  guide. Compose configuration and Caddyfile syntax were validated locally.
+- No external server, stable hostname or hosting account is available. The user requires
+  an external, free, always-on host without a bank card. No provider's current free-tier
+  terms were verified, and no public deployment has been performed.

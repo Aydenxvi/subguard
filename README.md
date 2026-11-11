@@ -177,3 +177,5 @@ See [the case study](docs/PORTFOLIO.md), [walkthrough script](docs/DEMO_SCRIPT_R
 without copying user data, run `python scripts/check_backup.py` with Compose running.
 The check creates temporary databases, restores the application schema plus a synthetic
 user, verifies it, then removes only its own temporary databases.
+
+For a persistent HTTPS deployment, see [hosting instructions](docs/HOSTING_RU.md) and `compose.production.yaml`.

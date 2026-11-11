@@ -35,3 +35,8 @@
 - Added CI configuration and local setup/readiness/recovery tooling.
 - Verified isolated PostgreSQL schema + synthetic-row backup/restore.
 - Documented first Telegram launch without a VPS/domain using a temporary local tunnel.
+
+## External hosting preparation — 2026-11-11
+- Added a production Compose override and Caddy HTTPS configuration for a server with
+  a public hostname, plus Russian deployment instructions.
+- Validated Compose and Caddyfile syntax. A hosted instance has not been provisioned.

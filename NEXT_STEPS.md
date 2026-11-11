@@ -28,3 +28,5 @@ never request bot tokens in chat. For permanent hosting, obtain the user's targe
 configure secrets securely. GitHub Actions hosted outcome remains unverified. Portfolio
 case study, API snapshot and walkthrough are prepared. App release remains 0.2.0 until
 an application change; the next downloadable package is SUBGUARD_003.
+
+The user now wants a free always-on server without a bank card. No hosting account, VPS, stable DNS or SSH access has been supplied. Production Compose/Caddy and docs/HOSTING_RU.md are prepared. Do not claim a live deployment. Free-tier availability/terms were not verifiable from this environment (oracle.com blocked by network policy).
