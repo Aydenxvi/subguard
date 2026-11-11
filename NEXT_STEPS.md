@@ -43,6 +43,6 @@ were published in successful Pages workflow run 43073465936. Do not describe the
 simulation as a live Telegram bot.
 
 The owner supplied 14 additional screenshots. The source copies and gallery are in
-`docs/screenshots/owner/` and the Pages landing page at `#gallery`. Confirm the Pages
-workflow succeeds after publication before sharing the gallery URL. The images document
+`docs/screenshots/owner/` and the Pages landing page at `#gallery`. The Pages
+workflow succeeded in run 43082817131. The images document
 the fictional-data static preview, not a deployed backend or live Telegram bot.

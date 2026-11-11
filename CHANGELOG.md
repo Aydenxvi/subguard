@@ -5,6 +5,7 @@
 - Published the owner's 14 screenshots as a desktop/mobile gallery with full-size links
   and localized labels. The static demo and full application behavior are unchanged.
 - Locally verified both builds, 3 unit tests and 6 Chromium showcase scenarios.
+- GitHub Pages deployment succeeded in workflow run 43082817131.
 
 ## 0.2.0 — SUBGUARD_002 — 2026-11-10
 

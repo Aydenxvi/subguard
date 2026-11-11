@@ -157,4 +157,8 @@ Added downloads/subscriptions_example.csv: four explicitly fictional subscriptio
   repository copies under `docs/screenshots/owner/`.
 - Local validation: three frontend unit tests, normal and showcase builds, and six
   Chromium showcase scenarios passed. The new scenario loads all 14 images and checks
-  full-size links. Hosted publication status is recorded separately after deployment.
+  full-size links. A visual review caught and fixed a missing arrow glyph; the gallery
+  scenario passed again after that change.
+- GitHub Pages workflow run 43082817131 completed successfully for commit c227ba6 and
+  reported `https://aydenxvi.github.io/subguard/`. Direct HTTP inspection of that
+  domain remains unavailable from this managed environment.
