@@ -8,10 +8,11 @@
 
 React · TypeScript · FastAPI · PostgreSQL · SQLAlchemy · aiogram · Docker
 
-Browser demo: runs locally without Telegram credentials. A hosted public demo is not yet published.
+**[Open the public interface showcase](https://aydenxvi.github.io/subguard/)** ·
+[How this static preview works](docs/SHOWCASE_RU.md)
 
-For a card-free interface preview, build the [static GitHub Pages showcase](docs/SHOWCASE_RU.md).
-It uses fictional in-browser data; the full FastAPI/PostgreSQL/Telegram app still needs a server.
+The showcase uses fictional data stored only in the current browser tab. The full
+FastAPI/PostgreSQL/Telegram app runs locally and still needs a server for public use.
 
 [Download SUBGUARD_002.zip](https://github.com/Aydenxvi/subguard/raw/refs/heads/main/downloads/SUBGUARD_002.zip) — packaged source, documentation and portable Git history.
 

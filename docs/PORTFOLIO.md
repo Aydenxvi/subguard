@@ -2,7 +2,7 @@
 
 **A subscription protection app delivered through Telegram and a browser demo.**
 
-[Source](https://github.com/Aydenxvi/subguard) · [Desktop](screenshots/desktop-002.png) · [Mobile](screenshots/mobile-002.png) · [Architecture](ARCHITECTURE.md)
+[Source](https://github.com/Aydenxvi/subguard) · [Static interface showcase](https://aydenxvi.github.io/subguard/) · [Desktop](screenshots/desktop-002.png) · [Mobile](screenshots/mobile-002.png) · [Architecture](ARCHITECTURE.md)
 
 ## Problem
 
@@ -91,7 +91,8 @@ inspect the actual [Actions results](https://github.com/Aydenxvi/subguard/action
   a message. Telegram sendMessage has no idempotency key. Routine retries/concurrency are
   handled; an exactly-once guarantee is deliberately not made.
 - Cancellation/refund outcomes are user-entered records, not verified provider integrations.
-- Public HTTPS hosting and live Telegram acceptance still need real deployment configuration.
+- The full FastAPI/PostgreSQL/Telegram service is not publicly hosted; only the
+  static interface showcase is on GitHub Pages.
 - Demo accounts are isolated but not automatically expired by a retention job.
 - Native Windows Docker Desktop acceptance, production load and production recovery are
   separate from the Linux development checks.

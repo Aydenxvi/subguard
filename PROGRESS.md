@@ -117,9 +117,11 @@ Added downloads/subscriptions_example.csv: four explicitly fictional subscriptio
   passed against the static production build: desktop navigation/local editing/reload
   without API calls, mobile refund view/draft/no horizontal overflow, and CSV
   preview/import using the sample file.
-- A GitHub Pages workflow and guide are prepared. Public deployment requires a verified
-  successful Actions run and reachable Pages URL; those are not claimed yet.
+- A GitHub Pages workflow and guide were prepared for static hosting.
 - Hosted workflow run 43070624404 reached the Pages configuration step and failed with
   `HttpError: Resource not accessible by integration` while attempting to create the
-  Pages site. The repository owner must enable **Settings → Pages → GitHub Actions**
-  once, then rerun **Public showcase**. No live URL is claimed.
+  Pages site. The repository owner enabled **Settings → Pages → GitHub Actions**.
+- Follow-up workflow run 43071377681 completed successfully and displayed the deployment
+  URL `https://aydenxvi.github.io/subguard/`. Direct HTTP reachability from this
+  restricted development environment was not checked (`github.io` is blocked by its
+  network policy). The user should open the published URL in a normal browser.

@@ -32,9 +32,9 @@ an application change; the next downloadable package is SUBGUARD_003.
 The user now wants a free always-on server without a bank card. No hosting account, VPS, stable DNS or SSH access has been supplied. Production Compose/Caddy and docs/HOSTING_RU.md are prepared. Do not claim a live deployment. Free-tier availability/terms were not verifiable from this environment (oracle.com blocked by network policy).
 
 The user now requests a public, static interface showcase because Oracle declined their
-Kyrgyzstan-issued card. The showcase code and Pages workflow are prepared. Verify the
-hosted workflow and URL before claiming the showcase is live. A static showcase does not
+Kyrgyzstan-issued card. The showcase code and Pages workflow are published. A static showcase does not
 run the real bot/API/worker and is not the permanent hosting requested earlier.
-First hosted run 43070624404 failed when configure-pages tried to enable Pages using
-the workflow token (`Resource not accessible by integration`). Ask the repository owner
-to select GitHub Actions in Settings → Pages, then rerun the workflow and verify the URL.
+The owner enabled Pages. Follow-up workflow run 43071377681 succeeded and reports
+https://aydenxvi.github.io/subguard/. Direct HTTP verification from the managed
+environment is blocked by network policy; ask the user to open the link normally if
+reachability confirmation is needed. Keep the full app's hosting status separate.

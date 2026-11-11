@@ -45,3 +45,5 @@
 - Added an opt-in GitHub Pages build of the existing React UI with fictional, tab-local data.
 - Clearly labeled the preview and disabled Telegram/API traffic in this build.
 - Added a deployment workflow, Russian guide and desktop/mobile browser checks.
+- GitHub Pages publication succeeded in workflow run 43071377681 after the owner
+  enabled Pages in repository settings; direct HTTP verification is still pending.
